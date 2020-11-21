@@ -2,9 +2,11 @@ import {Router} from 'express';
 const router = Router();
 
 import {
-    getUsers
+    getUsers,
+    register
 } from '../controllers/user.controller'
 
-router.get('/users', getUsers)
+router.get('/', getUsers)
+router.post('/register', register)
 
 export default router
