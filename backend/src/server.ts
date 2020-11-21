@@ -17,6 +17,7 @@ import { pool } from './database'
 import { IDatabaseUser, IUser } from './interfaces/UserInterface'
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 app.use(
     session({
@@ -29,8 +30,8 @@ app.use(cookieParser())
 app.use(passport.initialize())
 app.use(passport.session())
 
-passport.use(new LocalStrategy( async (username: string, password: string, done) => {
-    const response: QueryResult<IDatabaseUser> = await pool.query('SELECT * FROM users WHERE name = $1', [username])
+passport.use(new LocalStrategy( async (name: string, password: string, done) => {
+    const response: QueryResult<IDatabaseUser> = await pool.query('SELECT * FROM users WHERE name = $1', [name])
     const user = response.rows[0]
     if (!user) return done(null, false)
     bcrypt.compare(password, user.password, (err: Error, result: Boolean) => {

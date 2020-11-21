@@ -16,7 +16,7 @@ import { isAdminMiddleware } from '../middleware/admin';
 router.post('/register', register)
 router.post('/login', passport.authenticate('local'), login)
 router.get('/user', user)
-router.get('logOut', logOut)
+router.get('/logOut', logOut)
 
 // Admin routes
 router.get('/', isAdminMiddleware, getUsers)

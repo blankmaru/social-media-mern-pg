@@ -9,18 +9,21 @@ import { logger } from '../log/logger'
 // Auth
 export const register = async (req: Request, res: Response): Promise<Response | undefined> => {
     try {
-        const { name, email, password} = req?.body
-        if (!name || !email || !password || typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
+        const { username, email, password} = req?.body
+        if (!username || !email || !password || typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
             return res.status(400).json({ message: 'Invalid values'})
         }
+
+        console.log(req?.body)
     
-        pool.query('SELECT * FROM users WHERE name = $1', [name]).then(async (doc: QueryResult<IDatabaseUser>) => {
+        pool.query('SELECT * FROM users WHERE username = $1', [username]).then(async (doc: QueryResult<IDatabaseUser>) => {
             if (doc.rows[0]) return res.status(400).json({ message: 'User already registered'})
             if (!doc.rows[0]) {
                 const hashedPassword = await bcrypt.hash(password, 10)
-                const response: QueryResult = await pool.query('INSERT INTO users (name, password, email) VALUES ($1, $2, $3)', [name, hashedPassword, email])
-                logger.info(`User ${name}, ${email}, password: ${hashedPassword} was created`)
-                return res.status(200).json({ message: 'User successfully registered!'})
+                const response: QueryResult = await pool.query('INSERT INTO users (username, password, email) VALUES ($1, $2, $3)', [username, hashedPassword, email])
+                console.log('Registered: ', true)
+                logger.info(`User ${username}, ${email}, password: ${hashedPassword} was created`)
+                return res.status(200).json({ message: 'User successfully registered!', success: true })
             }
         })
     } catch(err) {
@@ -30,13 +33,17 @@ export const register = async (req: Request, res: Response): Promise<Response | 
 }
 
 export const login = async (req: Request, res: Response): Promise<Response | undefined> => {
-    logger.info('User login is success')
-    return res.status(200).json({ auth: true })
+    try {
+        logger.info('User login is success')
+        return res.status(200).json({ auth: true })
+    } catch(err) {
+        return res.status(400).json({ error: err })
+    }
 }
 
 export const user = async (req: Request, res: Response): Promise<Response | undefined> => {
     logger.info({ user: req.user, message: 'Get user' })
-    return res.status(200).json(req.user)
+    return res.json(req.user)
 }
 
 export const logOut = async (req: Request, res: Response): Promise<Response | undefined> => {
