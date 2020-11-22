@@ -13,8 +13,6 @@ export const register = async (req: Request, res: Response): Promise<Response | 
         if (!username || !email || !password || typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
             return res.status(400).json({ message: 'Invalid values'})
         }
-
-        console.log(req?.body)
     
         pool.query('SELECT * FROM users WHERE username = $1', [username]).then(async (doc: QueryResult<IDatabaseUser>) => {
             if (doc.rows[0]) return res.status(400).json({ message: 'User already registered'})
@@ -37,13 +35,14 @@ export const login = async (req: Request, res: Response): Promise<Response | und
         logger.info('User login is success')
         return res.status(200).json({ auth: true })
     } catch(err) {
+        logger.error({ error: err })
         return res.status(400).json({ error: err })
     }
 }
 
 export const user = async (req: Request, res: Response): Promise<Response | undefined> => {
     logger.info({ user: req.user, message: 'Get user' })
-    return res.json(req.user)
+    return res.send(req.user)
 }
 
 export const logOut = async (req: Request, res: Response): Promise<Response | undefined> => {

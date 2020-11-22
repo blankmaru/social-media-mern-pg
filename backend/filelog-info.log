@@ -74,3 +74,79 @@
 {"message":"Get user","level":"info","timestamp":"2020-11-21T23:11:32.456Z"}
 {"message":"User Geddoku, geddoku@gmail.com, password: $2a$10$jkKG/JBMHlEFRLz0v0OrQuEnR6WWMw643uTUe4fdz9IWBV1.noyOi was created","level":"info","timestamp":"2020-11-21T23:11:41.942Z"}
 {"message":"Get user","level":"info","timestamp":"2020-11-21T23:11:42.572Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-21T23:14:10.866Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-21T23:14:14.659Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-21T23:15:37.046Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T11:52:01.091Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T11:54:53.642Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T11:56:49.498Z"}
+{"message":"User Geddoku, geddoku@gmail.com, password: $2a$10$3XBHuoh7qyXIdqiCwJ8CneCsEonb2rcJi0ALTlepFsNaVtEoy2mgS was created","level":"info","timestamp":"2020-11-22T11:58:01.851Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T11:58:02.340Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:01:17.565Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:01:18.262Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:06:58.943Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:13:24.582Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:13:29.550Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:15:28.483Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:15:39.325Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:18:19.335Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:19:33.156Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:19:34.334Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:19:40.655Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:20:12.347Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:20:30.845Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:20:32.454Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:20:49.959Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:20:52.848Z"}
+{"message":{"error":{}},"level":"error","timestamp":"2020-11-22T12:20:52.849Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:21:13.850Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:21:22.639Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:21:51.990Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:22:45.198Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:25:07.269Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:26:53.349Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:29:24.396Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:29:25.477Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:32:13.710Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:32:23.312Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:32:23.940Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:32:45.233Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:32:58.062Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:32:58.694Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:36:07.762Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T12:38:46.394Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:38:47.045Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:39:08.975Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:39:31.675Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:39:32.188Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:42:45.435Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:46:03.580Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:48:04.581Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:48:06.331Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:48:47.734Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:50:56.826Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:50:59.714Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:51:44.404Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T12:54:56.890Z"}
+{"message":"User kottomaru, kottomaru@gmail.com, password: $2a$10$BBHvLyTpwEPxmIXnut6d5u7lOckBRAsasnkHTwjPGRSV8X2BzKgjm was created","level":"info","timestamp":"2020-11-22T12:58:37.332Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T12:58:37.982Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:02:14.605Z"}
+{"message":"User test, test@mail.com, password: $2a$10$HISaQA4NycJRgTTyTvS2m.mWo4NrCBxN2a6kclsPx4xWAXWOIfy2e was created","level":"info","timestamp":"2020-11-22T13:04:25.849Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:04:26.514Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:05:06.482Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:05:42.902Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:18:51.433Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:27:07.052Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:27:11.516Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:30:38.001Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:30:40.694Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:30:54.320Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T13:32:09.127Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:32:37.032Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:34:31.258Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:34:38.180Z"}
+{"message":"User login is success","level":"info","timestamp":"2020-11-22T13:34:41.713Z"}
+{"user":{"id":3,"username":"test","isadmin":false},"message":"Get user","level":"info","timestamp":"2020-11-22T13:34:42.354Z"}
+{"success":true,"level":"info","message":"User logOut","timestamp":"2020-11-22T13:34:50.571Z"}
+{"message":"Get user","level":"info","timestamp":"2020-11-22T13:34:51.194Z"}
+{"message":"Server is running","level":"info","timestamp":"2020-11-22T13:35:17.946Z"}

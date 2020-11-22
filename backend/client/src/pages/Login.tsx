@@ -15,6 +15,9 @@ export default function Login() {
             username,
             password
         }, {
+            headers: {
+                'content-type': 'application/json'
+            },
             withCredentials: true
         }).then((res: AxiosResponse) => {
             if (res.data.auth === true) {
