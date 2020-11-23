@@ -8,7 +8,10 @@ import {
     LoginOutlined,
     ProfileOutlined,
     LogoutOutlined,
-    PlusCircleOutlined
+    PlusCircleOutlined,
+    SettingOutlined,
+    UsergroupAddOutlined,
+    MessageOutlined
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { myContext } from '../Context'
@@ -35,7 +38,7 @@ const Navbar: React.FC = () => {
         >
             <Menu.Item>
                 <HomeOutlined />
-                <Link to="/">Home</Link>
+                <Link to="/">News</Link>
             </Menu.Item>
             {ctx ? (
                 <>
@@ -46,6 +49,18 @@ const Navbar: React.FC = () => {
                     <Menu.Item>
                         <ProfileOutlined />
                         <Link to="/profile">Profile</Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <MessageOutlined />
+                        <Link to="/messenger">Messenger</Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <UsergroupAddOutlined />
+                        <Link to="/friends">Friends</Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <SettingOutlined />
+                        <Link to="/settings">Settings</Link>
                     </Menu.Item>
                     <Menu.Item onClick={logout}>
                         <LogoutOutlined />

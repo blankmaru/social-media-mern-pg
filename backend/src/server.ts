@@ -12,6 +12,8 @@ import { logger } from './log/logger'
 const app = express()
 
 import usersRoutes from './routes/user.routes'
+import postsRoutes from './routes/post.routes'
+
 import { QueryResult } from 'pg'
 import { pool } from './database'
 import { IDatabaseUser, IUser } from './interfaces/UserInterface'
@@ -62,6 +64,7 @@ passport.deserializeUser(async (id: string, cb) => {
 })
 
 app.use('/api/users', usersRoutes)
+app.use('/api/posts', postsRoutes)
 
 app.listen(5000, () => {
     logger.info('Server is running')

@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function Home() {
+function Friends() {
     return (
         <div>
-            Home
+            Friends
         </div>
     )
 }
+
+export default Friends

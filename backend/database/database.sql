@@ -6,5 +6,15 @@ CREATE TABLE users(
     name VARCHAR(40),
     password VARCHAR(255),
     email TEXT,
-    isAdmin BOOLEAN DEFAULT false
+    isAdmin BOOLEAN DEFAULT false,
+    posts TEXT []
+);
+
+CREATE TABLE posts(
+	id SERIAL NOT NULL PRIMARY KEY,
+    title VARCHAR(127) UNIQUE,
+    content VARCHAR(255),
+	author json NOT NULL,
+    likes INTEGER DEFAULT 0,
+    comments TEXT [] 
 );

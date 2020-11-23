@@ -5,11 +5,14 @@ import { Row, Col } from 'antd'
 
 import Navbar from './components/Navbar';
 import Admin from './pages/Admin';
-import Home from './pages/Home';
+import News from './pages/News';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import { myContext } from './Context';
 import Register from './pages/Register';
+import Messenger from './pages/Messenger';
+import Friends from './pages/Friends';
+import Settings from './pages/Settings';
 
 function App() {
   const ctx = useContext(myContext)
@@ -22,12 +25,15 @@ function App() {
           </Col>
           <Col span={18} style={{padding: '1rem'}}>
           <Switch>
-            <Route path='/' exact component={Home}></Route>  
+            <Route path='/' exact component={News}></Route>  
             {
                 ctx ? (
                   <>
                     {ctx.isAdmin ? <Route path='/admin' component={Admin}></Route> : null}
-                    <Route path='/profile' component={Profile}></Route>  
+                    <Route path='/profile' component={Profile}></Route>
+                    <Route path='/messenger' component={Messenger}></Route> 
+                    <Route path='/friends' component={Friends}></Route> 
+                    <Route path='/settings' component={Settings}></Route>   
                   </>
                 ) : (
                   <>
