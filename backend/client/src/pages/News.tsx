@@ -17,6 +17,7 @@ import {
 import { IPost } from '../interfaces/interfaces'
 import Axios, { AxiosResponse } from 'axios';
 import { myContext } from '../Context';
+import Dropzone from 'react-dropzone';
 
 const { Meta } = Card;
 
@@ -31,7 +32,7 @@ const News: React.FC = () => {
         Axios.get('http://localhost:5000/api/posts', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
-            setPosts(res.data)
+            setPosts(res.data.reverse())
         })
     }, [])
 
@@ -58,10 +59,14 @@ const News: React.FC = () => {
             })
     }
 
+    const onDrop = (files: File) => {
+
+    }
+
     return (
         <div>
             <Row>
-                <Col span={18}>
+                <Col span={20}>
                     {ctx 
                     ?   <Card style={{width: '75%', padding: '1rem'}} hoverable>
                             <h2>Create New Post</h2>
@@ -80,13 +85,22 @@ const News: React.FC = () => {
                                             onChange={(e) => setContent(e.target.value)}
                                         />
                                     </Form.Item>
-                                    <Form.Item>
+                                    <Form.Item style={{display: 'flex'}}>
                                         <Button onClick={submit} type="primary" htmlType="submit">
                                             ADD
                                         </Button>
-                                        <Button style={{marginLeft: '1rem'}} onClick={submit} type="default" htmlType="submit">
-                                            <FileImageOutlined />
-                                        </Button>
+                                            <Dropzone onDrop={() => onDrop}>
+                                                {({getRootProps, getInputProps}) => (
+                                                    <section style={{marginTop: '1rem'}}>
+                                                        <div {...getRootProps()}>
+                                                            <input {...getInputProps()} />
+                                                            <Button>
+                                                                <FileImageOutlined type="upload" />
+                                                            </Button>
+                                                        </div>
+                                                    </section>
+                                                )}
+                                            </Dropzone>
                                     </Form.Item>
                                 </Form>
                         </Card>
@@ -143,8 +157,8 @@ const News: React.FC = () => {
                         })}
                     </div>
                 </Col>
-                <Col span={4}>
-                    Bar
+                <Col span={2}>
+                    Popular Author's
                 </Col>
             </Row>
         </div>

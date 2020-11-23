@@ -1,2 +1,3 @@
 {"message":{"error":{}},"level":"error","timestamp":"2020-11-21T23:11:09.770Z"}
 {"message":{"error":{}},"level":"error","timestamp":"2020-11-22T12:20:52.849Z"}
+{"message":{"error":{"length":354,"name":"error","severity":"ПОМИЛКА","code":"23505","detail":"Ключ (title)=(New Song) вже існує.","schema":"public","table":"posts","constraint":"posts_title_key","file":"d:\\pginstaller_13.auto\\postgres.windows-x64\\src\\backend\\access\\nbtree\\nbtinsert.c","line":"656","routine":"_bt_check_unique"}},"level":"error","timestamp":"2020-11-23T20:15:06.059Z"}

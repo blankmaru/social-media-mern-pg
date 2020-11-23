@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import Messenger from './pages/Messenger';
 import Friends from './pages/Friends';
 import Settings from './pages/Settings';
+import Notifications from './pages/Notifications';
 
 function App() {
   const ctx = useContext(myContext)
@@ -33,6 +34,7 @@ function App() {
                     <Route path='/profile' component={Profile}></Route>
                     <Route path='/messenger' component={Messenger}></Route> 
                     <Route path='/friends' component={Friends}></Route> 
+                    <Route path='/notifications' component={Notifications}></Route> 
                     <Route path='/settings' component={Settings}></Route>   
                   </>
                 ) : (

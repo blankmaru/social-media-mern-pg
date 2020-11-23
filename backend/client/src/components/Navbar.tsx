@@ -11,7 +11,8 @@ import {
     PlusCircleOutlined,
     SettingOutlined,
     UsergroupAddOutlined,
-    MessageOutlined
+    MessageOutlined,
+    NotificationOutlined
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { myContext } from '../Context'
@@ -57,6 +58,10 @@ const Navbar: React.FC = () => {
                     <Menu.Item>
                         <UsergroupAddOutlined />
                         <Link to="/friends">Friends</Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <NotificationOutlined />
+                        <Link to="/notifications">Notifications</Link>
                     </Menu.Item>
                     <Menu.Item>
                         <SettingOutlined />
