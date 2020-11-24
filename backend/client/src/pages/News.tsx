@@ -7,7 +7,8 @@ import {
     Button,
     Card,
     Divider,
-    Spin
+    Spin,
+    Modal
 } from 'antd';
 import {
     FileImageOutlined,
@@ -20,6 +21,7 @@ import { myContext } from '../Context';
 import Dropzone from 'react-dropzone';
 
 const { Meta } = Card;
+const { TextArea } = Input;
 
 const News: React.FC = () => {
     const ctx = useContext(myContext)
@@ -27,6 +29,7 @@ const News: React.FC = () => {
     const [title, setTitle] = useState<string>('')
     const [content, setContent] = useState<string>('')
     const [status, setStatus] = useState<boolean>(false)
+    const [visible, setVisible] = useState<boolean>(false)
 
     useEffect(() => {
         Axios.get('http://localhost:5000/api/posts', {
@@ -53,6 +56,23 @@ const News: React.FC = () => {
         Axios.delete(`http://localhost:5000/api/posts/${id}`)
             .then((res: AxiosResponse) => {
                 setStatus(true)
+                setTimeout(() => {
+                    window.location.href = "/"
+                }, 1000)
+            })
+    }
+
+    const showModal = () => {
+        setVisible(true)
+    };
+
+    const handleCancel = () => {
+        setVisible(false)
+    };
+
+    const update = (id: string) => {
+        Axios.put(`http://localhost:5000/api/posts/${id}`)
+            .then((res: AxiosResponse) => {
                 setTimeout(() => {
                     window.location.href = "/"
                 }, 1000)
@@ -127,9 +147,32 @@ const News: React.FC = () => {
                                         </div>
                                         {ctx?.username === item.author.username
                                         ?   (<div>
-                                                <Button style={{marginLeft: '1rem'}}>
+                                                <Button onClick={showModal} style={{marginLeft: '1rem'}}>
                                                     <EditOutlined />
                                                 </Button>
+                                                <Modal
+                                                    title={item.title}
+                                                    visible={visible}
+                                                    onOk={() => update(item.id)}
+                                                    onCancel={handleCancel}
+                                                >
+                                                    <Form>
+                                                        <Form.Item>
+                                                            <Input 
+                                                                placeholder="Update Title"
+                                                                value={title} 
+                                                                onChange={(e) => setTitle(e.target.value)}
+                                                            />
+                                                        </Form.Item>
+                                                        <Form.Item>
+                                                            <TextArea 
+                                                            placeholder="Update Content"
+                                                            value={content} 
+                                                            onChange={(e) => setContent(e.target.value)}
+                                                            />
+                                                        </Form.Item>
+                                                    </Form>
+                                                </Modal>
                                                 <Button
                                                     onClick={() => deletePost(item.id)} 
                                                     style={{
@@ -140,11 +183,13 @@ const News: React.FC = () => {
                                                     <DeleteOutlined />
                                                 </Button>
                                             </div>)
-                                        :   (<div>
+                                        :  ctx 
+                                            ?(<div>
                                                 <Button>
                                                     FOLLOW
                                                 </Button>
                                             </div>)
+                                            : null
                                         }
                                     </div>
                                     <Divider />
