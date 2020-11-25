@@ -7,7 +7,8 @@ CREATE TABLE users(
     password VARCHAR(255),
     email TEXT,
     isAdmin BOOLEAN DEFAULT false,
-    posts TEXT []
+    friends TEXT [],
+    posts TEXT [] 
 );
 
 CREATE TABLE posts(

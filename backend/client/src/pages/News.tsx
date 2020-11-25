@@ -8,7 +8,8 @@ import {
     Card,
     Divider,
     Spin,
-    Modal
+    Modal,
+    Empty
 } from 'antd';
 import {
     FileImageOutlined,
@@ -36,6 +37,12 @@ const News: React.FC = () => {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setPosts(res.data.reverse())
+            console.log(res.data)
+        })
+        Axios.get('http://localhost:5000/api/users', {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            console.log(res.data)
         })
     }, [])
 
@@ -79,10 +86,6 @@ const News: React.FC = () => {
             })
     }
 
-    const onDrop = (files: File) => {
-
-    }
-
     return (
         <div>
             <Row>
@@ -105,22 +108,20 @@ const News: React.FC = () => {
                                             onChange={(e) => setContent(e.target.value)}
                                         />
                                     </Form.Item>
-                                    <Form.Item style={{display: 'flex'}}>
+                                    <Form.Item style={{display: 'flex', flexWrap: 'wrap'}}>
                                         <Button onClick={submit} type="primary" htmlType="submit">
                                             ADD
                                         </Button>
-                                            <Dropzone onDrop={() => onDrop}>
-                                                {({getRootProps, getInputProps}) => (
-                                                    <section style={{marginTop: '1rem'}}>
-                                                        <div {...getRootProps()}>
-                                                            <input {...getInputProps()} />
-                                                            <Button>
-                                                                <FileImageOutlined type="upload" />
-                                                            </Button>
-                                                        </div>
-                                                    </section>
-                                                )}
-                                            </Dropzone>
+                                        <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+                                            {({getRootProps, getInputProps}) => (
+                                                <section>
+                                                    <div {...getRootProps()}>
+                                                        <input {...getInputProps()} />
+                                                        <FileImageOutlined />
+                                                    </div>
+                                                </section>
+                                            )}
+                                        </Dropzone>
                                     </Form.Item>
                                 </Form>
                         </Card>
@@ -131,7 +132,9 @@ const News: React.FC = () => {
                         ?   <Spin style={{marginTop: '1rem'}} />  
                         :   null
                         }
-                        {posts?.map((item) => {
+                        {posts?.length === undefined
+                        ? <Empty style={{ width: '75%', marginTop: '1rem' }} />
+                        : posts?.map((item) => {
                             return (
                                 <Card
                                     hoverable

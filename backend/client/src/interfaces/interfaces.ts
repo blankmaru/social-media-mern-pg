@@ -3,6 +3,8 @@ export interface IUser {
     username: string;
     email: string;
     isAdmin: boolean;
+    friends: Array<IUser>,
+    posts: []
 }
 
 export interface IPost {

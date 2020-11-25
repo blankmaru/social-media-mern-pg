@@ -29,7 +29,7 @@ export default function Login() {
     }
 
     return (
-        <div style={{padding: '2rem'}}>
+        <div style={{padding: '2rem', width: '50%'}}>
             <h2>Login</h2>
             <Form className="login-form">
                 <Form.Item>

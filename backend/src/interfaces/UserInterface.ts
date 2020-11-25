@@ -1,7 +1,11 @@
+import { IPost } from "../../client/src/interfaces/interfaces";
+
 export interface IUser {
     username: string;
     isAdmin: boolean;
     id: string;
+    friends: Array<object>;
+    posts: Array<IPost>;
 }
 
 export interface IDatabaseUser {
@@ -10,4 +14,6 @@ export interface IDatabaseUser {
     email: string;
     isAdmin: boolean;
     id: string;
+    friends: Array<object>;
+    posts: Array<IPost>;
 }

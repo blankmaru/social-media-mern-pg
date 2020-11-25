@@ -9,7 +9,7 @@ import { logger } from '../log/logger'
 // Auth
 export const register = async (req: Request, res: Response): Promise<Response | undefined> => {
     try {
-        const { username, email, password} = req?.body
+        const { username, email, password, friends, posts } = req?.body
         if (!username || !email || !password || typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
             return res.status(400).json({ message: 'Invalid values'})
         }
@@ -18,7 +18,8 @@ export const register = async (req: Request, res: Response): Promise<Response | 
             if (doc.rows[0]) return res.status(400).json({ message: 'User already registered'})
             if (!doc.rows[0]) {
                 const hashedPassword = await bcrypt.hash(password, 10)
-                const response: QueryResult = await pool.query('INSERT INTO users (username, password, email) VALUES ($1, $2, $3)', [username, hashedPassword, email])
+                const response: QueryResult 
+                = await pool.query('INSERT INTO users (username, password, email, friends, posts) VALUES ($1, $2, $3, $4, $5)', [username, hashedPassword, email, friends, posts])
                 console.log('Registered: ', true)
                 logger.info(`User ${username}, ${email}, password: ${hashedPassword} was created`)
                 return res.status(200).json({ message: 'User successfully registered!', success: true })
@@ -51,7 +52,6 @@ export const logOut = async (req: Request, res: Response): Promise<Response | un
     return res.status(200).json({ success: true })
 }
 
-// Func for Admin
 export const getUsers = async (req: Request, res: Response): Promise<Response> => {
     try {
         const response: QueryResult = await pool.query('SELECT * FROM users')
@@ -63,6 +63,7 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
     }
 }
 
+// Func for Admin
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         const id = parseInt(req.params.id)

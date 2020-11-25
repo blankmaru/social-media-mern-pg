@@ -10,7 +10,6 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import { myContext } from './Context';
 import Register from './pages/Register';
-import Messenger from './pages/Messenger';
 import Friends from './pages/Friends';
 import Settings from './pages/Settings';
 import Notifications from './pages/Notifications';
@@ -32,7 +31,6 @@ function App() {
                   <>
                     {ctx.isAdmin ? <Route path='/admin' component={Admin}></Route> : null}
                     <Route path='/profile' component={Profile}></Route>
-                    <Route path='/messenger' component={Messenger}></Route> 
                     <Route path='/friends' component={Friends}></Route> 
                     <Route path='/notifications' component={Notifications}></Route> 
                     <Route path='/settings' component={Settings}></Route>   

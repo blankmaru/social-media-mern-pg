@@ -15,7 +15,9 @@ export default function Register() {
         Axios.post('http://localhost:5000/api/users/register', {
             username,
             email,
-            password
+            password,
+            friends: [],
+            posts: []
         }, {
             withCredentials: true
         }).then((res: AxiosResponse) => {
@@ -26,7 +28,7 @@ export default function Register() {
     }
 
     return (
-        <div style={{padding: '2rem'}}>
+        <div style={{padding: '2rem', width: '50%'}}>
             <h2>Register</h2>
             <Form className="login-form">
                 <Form.Item>
