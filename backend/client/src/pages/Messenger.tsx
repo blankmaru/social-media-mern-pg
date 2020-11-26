@@ -88,25 +88,42 @@ const Messenger: React.FC = () => {
 	return (
 		<div>
 			<Row>
-				<Col span={6}>
-					<h2>Chatting:</h2>
-					<Link onClick={join} to={`/messenger?name=${ctx.username}&room=Music`}>
-					    MUSIC
-					</Link>
+				<Col span={8}>
+                    <Button>
+                        CREATE CHAT ROOM
+                    </Button>
+                    <div style={{marginTop: '1rem'}}>
+                        <h2>Chat Rooms: </h2>
+                        <Link style={{fontSize: '1.5rem'}} onClick={join} to={`/messenger?name=${ctx.username}&room=Music`}>
+                            MUSIC
+                        </Link>
+                    </div>
 				</Col>
-				<Col span={18}>
+				<Col span={16}>
                     <div>
-                        <p>CHAT INFO: {room}</p> 
-                        <p>CURRENT USER: {name}</p>                    
+                    <h2>CHAT ROOM: {room} {room 
+                    ? (<div>USERS IN CHAT: {users.length} </div>) 
+                    : null}</h2>                  
                     </div>        
                     <div>
                         <div className="infinite-container" style={{ height: '500px', overflowY: 'scroll' }}>
                         {messages.map((message, i) => 
                             <div key={i}>
-                                <Comment
-                                    author={message.user}
-                                    content={message.text}
+                                {message.user === ctx.username?.trim().toLowerCase()
+                                ?   <Comment
+                                        style={{
+                                            float: 'right',
+                                            marginRight: '1rem',
+                                            width: '50%'
+                                        }}
+                                        author={message.user}
+                                        content={message.text}
                                 />
+                                :   <Comment
+                                        avatar={'https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg'}
+                                        author={message.user}
+                                        content={message.text}
+                                    />}
                             </div>)}
                         </div>
                     </div>
