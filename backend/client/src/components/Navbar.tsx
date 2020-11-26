@@ -52,6 +52,10 @@ const Navbar: React.FC = () => {
                         <Link to="/profile">Profile</Link>
                     </Menu.Item>
                     <Menu.Item>
+                        <MessageOutlined />
+                        <Link to="/messenger">Messenger</Link>
+                    </Menu.Item>
+                    <Menu.Item>
                         <UsergroupAddOutlined />
                         <Link to="/friends">Friends</Link>
                     </Menu.Item>

@@ -37,7 +37,6 @@ const News: React.FC = () => {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setPosts(res.data.reverse())
-            console.log(res.data)
         })
         Axios.get('http://localhost:5000/api/users', {
             withCredentials: true

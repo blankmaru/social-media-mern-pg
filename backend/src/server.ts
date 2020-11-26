@@ -10,13 +10,12 @@ const LocalStrategy = passportLocal.Strategy
 
 import { logger } from './log/logger'
 const app = express()
-const server = require('http').createServer(app);
-const io = require("socket.io")(server, {
-    cors: {
-      origin: "https://localhost:3000",
-      methods: ["GET", "POST"],
-      credentials: true
-    }
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 import usersRoutes from './routes/user.routes'
@@ -29,8 +28,7 @@ import { IDatabaseUser, IUser } from './interfaces/UserInterface'
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
-app.options('*', cors());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 app.use(
     session({
         secret: "secretcode",
@@ -42,6 +40,33 @@ app.use(cookieParser())
 app.use(passport.initialize())
 app.use(passport.session())
 
+
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
+
+const server = require('http').createServer(app);
+const io = require("socket.io")(server, {
+    cors: {
+        origin: '*'
+    }
+});
+
+io.on('connect', (socket: any) => {
+    socket.on('join', ({ name, room }: { name: string, room: string}, callback: Function) => {
+        const { error, user } = addUser({ id: socket.id, name, room });
+    
+        if(error) return callback(error);
+    
+        socket.join(user.room);
+    
+        socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
+        socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+    
+        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+    
+        callback();
+      });
+});
+ 
 passport.use('local', new LocalStrategy( async (username: string, password: string, done) => {
     console.log(username + ' ' + password)
     await pool.query('SELECT * FROM users WHERE username = $1', [username]).then((res: QueryResult<IDatabaseUser>) => {
