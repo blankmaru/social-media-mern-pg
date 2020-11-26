@@ -15,3 +15,8 @@ export interface IPost {
     likes: number;
     comments: Array<string>;
 }
+
+export interface IMessage {
+    user: string;
+    text: string;
+}

@@ -25,6 +25,7 @@ import friendsRoutes from './routes/friend.routes'
 import { QueryResult } from 'pg'
 import { pool } from './database'
 import { IDatabaseUser, IUser } from './interfaces/UserInterface'
+import { IMessage } from '../client/src/interfaces/interfaces'
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -65,6 +66,23 @@ io.on('connect', (socket: any) => {
     
         callback();
       });
+
+      socket.on('sendMessage', (message: IMessage, callback: Function) => {
+        const user = getUser(socket.id);
+    
+        io.to(user.room).emit('message', { user: user.name, text: message });
+    
+        callback();
+      });
+    
+      socket.on('disconnect', () => {
+        const user = removeUser(socket.id);
+    
+        if(user) {
+          io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+          io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+        }
+      })
 });
  
 passport.use('local', new LocalStrategy( async (username: string, password: string, done) => {
