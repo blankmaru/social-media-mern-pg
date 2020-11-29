@@ -1,8 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { myContext } from '../Context'
 
 export default function Profile() {
     const ctx = useContext(myContext)
+
+    useEffect(() => {
+        
+    }, [])
 
     return (
         <div>

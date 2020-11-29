@@ -25,3 +25,13 @@ CREATE TABLE chats(
     title VARCHAR(127) UNIQUE,
     url VARCHAR(127) UNIQUE
 );
+
+CREATE TABLE testArray(
+    Id SERIAL NOT NULL PRIMARY KEY,
+    users varchar(20)[] 
+);
+
+INSERT INTO testArray (testArray) VALUES ('{"Geddoku"}') WHERE Id = 1;
+UPDATE testArray SET users = array_cat(users, '{"Trixy"}') WHERE Id = 1;
+UPDATE users SET friends = array_cat(friends, ('{"{\"name\":\"alex\", \"age\":20}", "{\"name\":\"peter\", \"age\":24}"}')) WHERE id = 1;
+UPDATE users SET friends = array_remove(friends, 'Trixy') WHERE id = 3;

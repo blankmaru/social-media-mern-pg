@@ -15,22 +15,47 @@ function Friends() {
     const [following, setFollowing] = useState<Array<IUser>>([])
 
     useEffect(() => {
-        setFollowing(ctx.friends!)
         Axios.get('http://localhost:5000/api/users', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setUsers(res.data.reverse())
         })
-    }, [ctx.friends])
+        Axios.get(`http://localhost:5000/api/friends/${ctx.id}`, { withCredentials: true })
+            .then((res: AxiosResponse) => {
+                setFollowing(res.data[0].friends.reverse())
+                console.log(res.data[0].friends)
+            })
+    }, [ctx.id])
 
     const follow = (item: IUser) => {
-        Axios.put('http://localhost:5000/api/friends', {
-            friend: item,
+        const friendName: string = `{${item}}`
+
+        Axios.put('http://localhost:5000/api/friends/follow', {
+            name: friendName,
             user: ctx
         }, {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             console.log(res.data)
+            setTimeout(() => {
+                window.location.href = "/friends"
+            }, 500)
+        })
+    }
+
+    const unfollow = (item: IUser) => {
+        const friendName: string = `${item}`
+
+        Axios.put('http://localhost:5000/api/friends/unfollow', {
+            name: friendName,
+            user: ctx
+        }, {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            console.log(res.data)
+            setTimeout(() => {
+                window.location.href = "/friends"
+            }, 500)
         })
     }
 
@@ -54,13 +79,13 @@ function Friends() {
                                     >
                                     <List.Item.Meta
                                         title={
-                                            <a href={`/profile/${item.username}`}>
-                                                {item.username}
+                                            <a href={`/profile/${item}`}>
+                                                {item}
                                             </a>
                                         }
                                         description={item.email}
                                     />
-                                    <Button>
+                                    <Button onClick={() => unfollow(item)}>
                                         UNFOLLOW
                                     </Button>
                                 </List.Item>

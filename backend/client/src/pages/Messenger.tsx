@@ -8,8 +8,6 @@ import queryString from 'query-string'
 import { 
     Row, 
     Col, 
-    Empty, 
-    List,
     Comment,
     Form,
     Input,
@@ -28,6 +26,7 @@ const Messenger: React.FC = () => {
     const ctx = useContext(myContext);
 
     // Chat Room
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [name, setName] = useState<any>();
     const [room, setRoom] = useState<any>();
     const [message, setMessage] = useState<string>();
@@ -65,6 +64,7 @@ const Messenger: React.FC = () => {
     
         setRoom(room);
         setName(name);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.search]);
 
     useEffect(() => {
@@ -185,7 +185,7 @@ const Messenger: React.FC = () => {
                             />
                         : chats?.map((chat) => {
                             return (
-                                <div style={{marginTop: '0.5rem'}}>
+                                <div key={chat.id} style={{marginTop: '0.5rem'}}>
                                     <Link style={{fontSize: '1.5rem'}} onClick={join} to={`/messenger?name=${ctx.username}&room=${chat.url}`}>
                                         {chat.title}
                                     </Link>

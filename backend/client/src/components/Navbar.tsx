@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
                         </Menu.Item>) : null}
                     <Menu.Item>
                         <ProfileOutlined />
-                        <Link to="/profile">Profile</Link>
+                        <Link to={`/profile/${ctx.username}`}>Profile</Link>
                     </Menu.Item>
                     <Menu.Item>
                         <MessageOutlined />
