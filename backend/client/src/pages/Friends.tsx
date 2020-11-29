@@ -28,7 +28,7 @@ function Friends() {
     }, [ctx.id])
 
     const follow = (item: IUser) => {
-        const friendName: string = `{${item}}`
+        const friendName: string = `{${item.username}}`
 
         Axios.put('http://localhost:5000/api/friends/follow', {
             name: friendName,
@@ -63,7 +63,7 @@ function Friends() {
         <div>
             <Row>
                 <Col span={12}>
-                    <h3 style={{color: 'red'}}>Your friends: </h3>
+                    <h5 style={{color: 'red'}}>Your friends: </h5>
                     <List
                         itemLayout="horizontal"
                         dataSource={following}
@@ -93,7 +93,7 @@ function Friends() {
                     />
                 </Col>
                 <Col span={12}>
-                    <h3>Peoples: </h3>
+                    <h5>Peoples: </h5>
                     <List
                         itemLayout="horizontal"
                         dataSource={users}

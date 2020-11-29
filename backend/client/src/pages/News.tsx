@@ -9,15 +9,16 @@ import {
     Divider,
     Spin,
     Modal,
-    Empty
+    Empty,
+    Image
 } from 'antd';
 import {
-    FileImageOutlined,
+    UploadOutlined,
     DeleteOutlined,
     EditOutlined
 } from '@ant-design/icons'
 import { IPost } from '../interfaces/interfaces'
-import Axios, { AxiosResponse } from 'axios';
+import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { myContext } from '../Context';
 import Dropzone from 'react-dropzone';
 
@@ -31,6 +32,8 @@ const News: React.FC = () => {
     const [content, setContent] = useState<string>('')
     const [status, setStatus] = useState<boolean>(false)
     const [visible, setVisible] = useState<boolean>(false)
+
+    const [image, setImage] = useState<string>('')
 
     useEffect(() => {
         Axios.get('http://localhost:5000/api/posts', {
@@ -49,13 +52,33 @@ const News: React.FC = () => {
         Axios.post('http://localhost:5000/api/posts', {
             title,
             content,
-            author: ctx
+            author: ctx,
+            image
         }, {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             console.log(res.data)
             window.location.href = '/'
         })
+    }
+
+    const onSubmitImg = (acceptedFiles: Array<File>) => {
+        console.log(acceptedFiles)
+        let formData = new FormData()
+
+        let config: AxiosRequestConfig = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+
+        formData.append('file', acceptedFiles[0])
+
+        Axios.post('api/files/uploadfiles', formData, config)
+            .then(res => {
+                if (res.data.success) {
+                    console.log(res.data)
+                    setImage(res.data.url)
+                }
+            })
     }
 
     const deletePost = (id: string) => {
@@ -91,7 +114,7 @@ const News: React.FC = () => {
                 <Col span={20}>
                     {ctx 
                     ?   <Card style={{width: '75%', padding: '1rem'}} hoverable>
-                            <h2>Create New Post</h2>
+                            <h5>Create New Post</h5>
                                 <Form className="login-form">
                                     <Form.Item>
                                         <Input
@@ -108,19 +131,31 @@ const News: React.FC = () => {
                                         />
                                     </Form.Item>
                                     <Form.Item style={{display: 'flex', flexWrap: 'wrap'}}>
-                                        <Button onClick={submit} type="primary" htmlType="submit">
+                                        <Button onClick={submit}>
                                             ADD
                                         </Button>
-                                        <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+                                        <Dropzone onDrop={(acceptedFiles: Array<File>) => onSubmitImg(acceptedFiles)}>
                                             {({getRootProps, getInputProps}) => (
-                                                <section>
+                                                <section style={{marginTop: '1rem'}}>
                                                     <div {...getRootProps()}>
                                                         <input {...getInputProps()} />
-                                                        <FileImageOutlined />
+                                                        <Button type="primary">
+                                                            <UploadOutlined /> Click to upload image
+                                                        </Button>
                                                     </div>
                                                 </section>
                                             )}
                                         </Dropzone>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        {image.substring(0, 7) === "uploads"
+                                        ?   <Image
+                                                style={{ maxWidth: '200px' }}
+                                                src={`http://localhost:5000/${image}`}
+                                                alt="img"
+                                            />
+                                        :   null
+                                        }
                                     </Form.Item>
                                 </Form>
                         </Card>

@@ -52,6 +52,29 @@ const io = require("socket.io")(server, {
     }
 });
 
+import multer from 'multer'
+import fs from 'fs'
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${Date.now()}_${file.originalname}`)
+    }
+})
+   
+const upload = multer({ storage: storage }).single("file")
+  
+app.post("/api/files/uploadfiles", (req, res) => {
+    upload(req, res, (err: any) => {
+      if(err) {
+        return res.json({ success: false, err })
+      }
+      return res.json({ success: true, url: res.req?.file.path });
+    })
+});
+
 io.on('connect', (socket: any) => {
     socket.on('join', ({ name, room }: { name: string, room: string}, callback: Function) => {
         const { error, user } = addUser({ id: socket.id, name, room });
@@ -128,6 +151,8 @@ app.use('/api/users', usersRoutes)
 app.use('/api/posts', postsRoutes)
 app.use('/api/friends', friendsRoutes)
 app.use('/api/chats', chatRoutes)
+
+app.use('/uploads', express.static('uploads'));
 
 const port = process.env.PORT || 5000
 

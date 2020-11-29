@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Form, Input, Button } from 'antd';
 import {
     UserOutlined,
-    LockOutlined
+    LockOutlined,
+    SendOutlined
 } from '@ant-design/icons'
 import Axios, { AxiosResponse } from 'axios';
 
@@ -28,45 +29,44 @@ export default function Register() {
     }
 
     return (
-        <div style={{padding: '2rem', width: '50%'}}>
-            <h2>Register</h2>
-            <Form className="login-form">
-                <Form.Item>
-                    <Input
-                        prefix={<UserOutlined type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Username"
-                        onChange={e => setUsername(e.target.value)}
+        <div className="container" style={{width: '400px', marginTop: '2rem'}}>
+            <h3>Register</h3>
+            <Form>
+                <div className="input-field">
+                    <i className="material-icons prefix"><UserOutlined /></i>
+                    <Input 
                         value={username}
+                        onChange={(e) => setUsername(e.target.value)} 
+                        type="text" 
+                        name="username" 
+                        placeholder="Username" 
                     />
-                </Form.Item>
-                <Form.Item>
-                    <Input
-                        prefix={<LockOutlined type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type="email"
-                        placeholder="Email"
-                        onChange={e => setEmail(e.target.value)}
+                </div>
+                <div className="input-field">
+                    <i className="material-icons prefix"><SendOutlined /></i>
+                    <Input 
                         value={email}
+                        onChange={(e) => setEmail(e.target.value)} 
+                        type="email" 
+                        name="email" 
+                        placeholder="Email" 
                     />
-                </Form.Item>
-                <Form.Item>
-                    <Input
-                        prefix={<LockOutlined type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type="password"
-                        placeholder="Password"
-                        onChange={e => setPassword(e.target.value)}
+                </div>
+                <div className="input-field">
+                    <i className="material-icons prefix"><LockOutlined /></i>
+                    <Input 
                         value={password}
+                        onChange={(e) => setPassword(e.target.value)} 
+                        type="password" 
+                        name="password" 
+                        placeholder="Password" 
                     />
-                </Form.Item>
-                <Form.Item>
-                    <Button 
-                        type="primary" 
-                        htmlType="submit" 
-                        className="login-form-button"
-                        onClick={register}
-                    >
-                        Register
+                </div>
+                <div className="input-field">
+                    <Button onClick={register} block>
+                            REGISTER
                     </Button>
-                </Form.Item>
+                </div>
             </Form>
         </div>
     )

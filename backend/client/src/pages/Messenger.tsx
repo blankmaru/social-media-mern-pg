@@ -173,7 +173,7 @@ const Messenger: React.FC = () => {
                         </Form>
                     </Modal>
                     <div style={{marginTop: '1rem'}}>
-                        <h2>Public Chat Rooms: </h2>
+                        <h5>Public Chat Rooms: </h5>
                         {chats?.length === undefined
                         ?   <Spin 
                                 style={{
@@ -196,9 +196,9 @@ const Messenger: React.FC = () => {
 				</Col>
 				<Col span={16}>
                     <div>
-                    <h2>CHAT ROOM: {room} {room 
+                    <h5>CHAT ROOM: {room} {room 
                     ? (<div>USERS IN CHAT: {users.length} </div>) 
-                    : null}</h2>                  
+                    : null}</h5>                  
                     </div>        
                     <div>
                         <div className="infinite-container" style={{ height: '500px', overflowY: 'scroll' }}>
@@ -225,7 +225,7 @@ const Messenger: React.FC = () => {
                     <div>
                         <Form style={{display: 'flex'}}>
                             <Form.Item style={{width: '100%'}}>
-                                <Input 
+                                <Input
                                     className="input"
                                     type="text"
                                     placeholder="Type a message..."

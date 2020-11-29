@@ -29,36 +29,34 @@ export default function Login() {
     }
 
     return (
-        <div style={{padding: '2rem', width: '50%'}}>
-            <h2>Login</h2>
-            <Form className="login-form">
-                <Form.Item>
-                    <Input
-                        prefix={<UserOutlined type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Username"
-                        onChange={e => setUsername(e.target.value)}
+        <div className="container" style={{width: '400px', marginTop: '2rem'}}>
+            <h3>Login</h3>
+            <Form>
+                <div className="input-field">
+                    <i className="material-icons prefix"><UserOutlined /></i>
+                    <Input 
                         value={username}
+                        onChange={(e) => setUsername(e.target.value)} 
+                        type="text" 
+                        name="username" 
+                        placeholder="Username" 
                     />
-                </Form.Item>
-                <Form.Item>
-                    <Input
-                        prefix={<LockOutlined type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type="password"
-                        placeholder="Password"
-                        onChange={e => setPassword(e.target.value)}
+                </div>
+                <div className="input-field">
+                    <i className="material-icons prefix"><LockOutlined /></i>
+                    <Input 
                         value={password}
+                        onChange={(e) => setPassword(e.target.value)} 
+                        type="password" 
+                        name="password" 
+                        placeholder="Password" 
                     />
-                </Form.Item>
-                <Form.Item>
-                    <Button 
-                        type="primary" 
-                        htmlType="submit" 
-                        className="login-form-button"
-                        onClick={login}
-                    >
-                        Log in
+                </div>
+                <div className="input-field">
+                    <Button onClick={login} block>
+                        LOGIN
                     </Button>
-                </Form.Item>
+                </div>
             </Form>
         </div>
     )
