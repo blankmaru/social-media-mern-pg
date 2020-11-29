@@ -13,7 +13,8 @@ import {
     Comment,
     Form,
     Input,
-    Button 
+    Button, 
+    Modal
 } from 'antd';
 import { myContext } from '../Context';
 
@@ -29,6 +30,10 @@ const Messenger: React.FC = () => {
     const [message, setMessage] = useState<string>();
     const [messages, setMessages] = useState<Array<IMessage>>([]);
     const [users, setUsers] = useState<Array<IUser>>([]);
+    const [open, setOpen] = useState<boolean>(false);
+
+    const [chatTitle, setChatTitle] = useState<string>('')
+    const [chatLinkURL, setChatLinkURL] = useState<string>('')
     
     useEffect(() => {
         socket = io(socketServer, {
@@ -85,13 +90,49 @@ const Messenger: React.FC = () => {
         }, 1000) 
     }
 
+    const onHandleCancel = () => {
+        setOpen(false)
+    }
+
+    const createChatRoom = () => {
+        if (!chatTitle || !chatLinkURL || chatTitle.length < 2 || chatLinkURL.length < 5) {
+            return alert(`Fields is empty or length is not valid!`)
+        }
+        
+    }
+
 	return (
 		<div>
 			<Row>
 				<Col span={8}>
-                    <Button>
+                    <Button onClick={() => setOpen(true)}>
                         CREATE CHAT ROOM
                     </Button>
+                    <Modal
+                        title="CREATE CHAT ROOM"
+                        visible={open}
+                        onOk={createChatRoom}
+                        onCancel={onHandleCancel}
+                    >
+                        <Form>
+                            <Form.Item>
+                                <p>Chat title</p>
+                                <Input 
+                                    placeholder="Title (more than 2 characters requirement)"
+                                    value={chatTitle}
+                                    onChange={(e) => setChatTitle(e.target.value)}
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <p>Chat Link URL</p>
+                                <Input 
+                                    placeholder="Link URL (our own, more than 5 characters requirement)"
+                                    value={chatLinkURL}
+                                    onChange={(e) => setChatLinkURL(e.target.value)}
+                                />
+                            </Form.Item>
+                        </Form>
+                    </Modal>
                     <div style={{marginTop: '1rem'}}>
                         <h2>Chat Rooms: </h2>
                         <Link style={{fontSize: '1.5rem'}} onClick={join} to={`/messenger?name=${ctx.username}&room=Music`}>

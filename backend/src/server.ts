@@ -21,6 +21,7 @@ app.use(function(req, res, next) {
 import usersRoutes from './routes/user.routes'
 import postsRoutes from './routes/post.routes'
 import friendsRoutes from './routes/friend.routes'
+import chatRoutes from './routes/chat.routes'
 
 import { QueryResult } from 'pg'
 import { pool } from './database'
@@ -126,6 +127,7 @@ passport.deserializeUser(async (id: string, cb) => {
 app.use('/api/users', usersRoutes)
 app.use('/api/posts', postsRoutes)
 app.use('/api/friends', friendsRoutes)
+app.use('/api/chats', chatRoutes)
 
 const port = process.env.PORT || 5000
 

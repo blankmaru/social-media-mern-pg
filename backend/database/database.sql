@@ -19,3 +19,9 @@ CREATE TABLE posts(
     likes INTEGER DEFAULT 0,
     comments TEXT [] 
 );
+
+CREATE TABLE chats(
+	id SERIAL NOT NULL PRIMARY KEY,
+    title VARCHAR(127) UNIQUE,
+    url VARCHAR(127) UNIQUE
+);
