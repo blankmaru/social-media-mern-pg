@@ -20,3 +20,9 @@ export interface IMessage {
     user: string;
     text: string;
 }
+
+export interface IChat {
+    id: string;
+    title: string;
+    url: string;
+}

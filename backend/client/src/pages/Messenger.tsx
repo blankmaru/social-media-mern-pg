@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, SyntheticEvent } from 'react';
 import io from 'socket.io-client';
 import axios, { AxiosResponse } from 'axios';
-import { IMessage, IUser } from '../interfaces/interfaces';
+import { IChat, IMessage, IUser } from '../interfaces/interfaces';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string'
 
@@ -14,7 +14,8 @@ import {
     Form,
     Input,
     Button, 
-    Modal
+    Modal,
+    Spin
 } from 'antd';
 import { myContext } from '../Context';
 
@@ -25,6 +26,8 @@ let socket: SocketIOClient.Socket;
 
 const Messenger: React.FC = () => {
     const ctx = useContext(myContext);
+
+    // Chat Room
     const [name, setName] = useState<any>();
     const [room, setRoom] = useState<any>();
     const [message, setMessage] = useState<string>();
@@ -32,8 +35,15 @@ const Messenger: React.FC = () => {
     const [users, setUsers] = useState<Array<IUser>>([]);
     const [open, setOpen] = useState<boolean>(false);
 
+    // Chat Modal with Form
     const [chatTitle, setChatTitle] = useState<string>('')
     const [chatLinkURL, setChatLinkURL] = useState<string>('')
+
+    // Displat all chat
+    const [chats, setChats] = useState<Array<IChat>>([])
+
+    // Spin loading state
+    const [createChatLoading, setCreateChatLoading] = useState<boolean>(false)
     
     useEffect(() => {
         socket = io(socketServer, {
@@ -90,6 +100,13 @@ const Messenger: React.FC = () => {
         }, 1000) 
     }
 
+    useEffect(() => {
+        axios.get(apiServer + '/api/chats', { withCredentials: true })
+            .then((res: AxiosResponse) => {
+                setChats(res.data.reverse())
+            })
+    }, [])
+
     const onHandleCancel = () => {
         setOpen(false)
     }
@@ -98,7 +115,19 @@ const Messenger: React.FC = () => {
         if (!chatTitle || !chatLinkURL || chatTitle.length < 2 || chatLinkURL.length < 5) {
             return alert(`Fields is empty or length is not valid!`)
         }
-        
+        setCreateChatLoading(true)
+        axios.post(apiServer + '/api/chats', {
+            title: chatTitle,
+            url: chatLinkURL
+        }, {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            setTimeout(() => {
+                setCreateChatLoading(false)
+            }, 1000)
+        }).catch((err: Error) => {
+            return console.log({ error: err })
+        })
     }
 
 	return (
@@ -114,6 +143,16 @@ const Messenger: React.FC = () => {
                         onOk={createChatRoom}
                         onCancel={onHandleCancel}
                     >
+                        {createChatLoading 
+                        ?   <Spin 
+                                style={{
+                                    display: 'block',
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    width: '40%'
+                                }} 
+                            />
+                        : null}
                         <Form>
                             <Form.Item>
                                 <p>Chat title</p>
@@ -134,10 +173,25 @@ const Messenger: React.FC = () => {
                         </Form>
                     </Modal>
                     <div style={{marginTop: '1rem'}}>
-                        <h2>Chat Rooms: </h2>
-                        <Link style={{fontSize: '1.5rem'}} onClick={join} to={`/messenger?name=${ctx.username}&room=Music`}>
-                            MUSIC
-                        </Link>
+                        <h2>Public Chat Rooms: </h2>
+                        {chats?.length === undefined
+                        ?   <Spin 
+                                style={{
+                                    display: 'block',
+                                    marginLeft: 'auto',
+                                    marginRight: 'auto',
+                                    width: '40%'
+                                }} 
+                            />
+                        : chats?.map((chat) => {
+                            return (
+                                <div style={{marginTop: '0.5rem'}}>
+                                    <Link style={{fontSize: '1.5rem'}} onClick={join} to={`/messenger?name=${ctx.username}&room=${chat.url}`}>
+                                        {chat.title}
+                                    </Link>
+                                </div>
+                            )
+                        })}
                     </div>
 				</Col>
 				<Col span={16}>
