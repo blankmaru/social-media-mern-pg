@@ -82,7 +82,7 @@ io.on('connect', (socket: any) => {
       let postId = parseInt(data.data.id)
       pool.query('UPDATE posts SET likes = $1 WHERE id = $2', [data.data.likes, postId]).then(() => {
         pool.query('UPDATE users SET posts = array_append(posts, $1) WHERE id = $2', [postId, userId]).then(() => {
-          return io.emit('Output like', { success: true })
+          return io.emit('Output like', { success: true, postId })
         })
       })
     })

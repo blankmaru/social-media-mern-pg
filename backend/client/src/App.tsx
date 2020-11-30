@@ -5,7 +5,7 @@ import { Row, Col } from 'antd'
 
 import Navbar from './components/Navbar';
 import Admin from './pages/Admin';
-import News from './pages/News';
+import News from './pages/News/News';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import { myContext } from './Context';
