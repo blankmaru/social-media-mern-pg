@@ -46,7 +46,10 @@ const Navbar: React.FC = () => {
                     {ctx.isAdmin ? (<Menu.Item>
                             <UserOutlined />
                             <Link to="/admin">Admin</Link>
-                        </Menu.Item>) : null}
+                        </Menu.Item>) : (<Menu.Item>
+                            <UserOutlined />
+                            <Link to="/admin">Admin</Link>
+                        </Menu.Item>)}
                     <Menu.Item>
                         <ProfileOutlined />
                         <Link to={`/profile/${ctx.username}`}>Profile</Link>

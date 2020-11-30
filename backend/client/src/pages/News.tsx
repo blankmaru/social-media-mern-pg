@@ -10,12 +10,17 @@ import {
     Spin,
     Modal,
     Empty,
-    Image
+    Image,
+    Select,
+    
 } from 'antd';
 import {
     UploadOutlined,
     DeleteOutlined,
-    EditOutlined
+    EditOutlined,
+    ExclamationCircleOutlined,
+    HeartOutlined,
+    CommentOutlined
 } from '@ant-design/icons'
 import { IPost } from '../interfaces/interfaces'
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -24,6 +29,7 @@ import Dropzone from 'react-dropzone';
 
 const { Meta } = Card;
 const { TextArea } = Input;
+const { Option } = Select;
 
 const News: React.FC = () => {
     const ctx = useContext(myContext)
@@ -34,6 +40,7 @@ const News: React.FC = () => {
     const [visible, setVisible] = useState<boolean>(false)
 
     const [image, setImage] = useState<string>('')
+    const [reportType, setReportType] = useState<string>('')
 
     useEffect(() => {
         Axios.get('http://localhost:5000/api/posts', {
@@ -106,6 +113,23 @@ const News: React.FC = () => {
                     window.location.href = "/"
                 }, 1000)
             })
+    }
+
+    const report = (id: string) => {
+        const report = {
+            postId: id,
+            message: reportType
+        }
+        Axios.post('http://localhost:5000/api/reports', { 
+            info: JSON.stringify(report)
+        }, {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            console.log(res.data)
+            setTimeout(() => {
+                window.location.href = "/"
+            }, 1000)
+        })
     }
 
     return (
@@ -242,6 +266,33 @@ const News: React.FC = () => {
                                                 <Button>
                                                     FOLLOW
                                                 </Button>
+                                                <Button onClick={showModal} style={{marginLeft: '1rem'}}>
+                                                    REPORT <ExclamationCircleOutlined />
+                                                </Button>
+                                                <Modal
+                                                    title="Report"
+                                                    visible={visible}
+                                                    onOk={() => report(item.id)}
+                                                    onCancel={handleCancel}
+                                                >
+                                                    <Form>
+                                                        <Form.Item
+                                                            name="select"
+                                                            hasFeedback
+                                                            rules={[{ required: true, message: 'Please select your country!' }]}
+                                                        >
+                                                            <Select 
+                                                                value={reportType} 
+                                                                placeholder="Please select a report type"
+                                                                onChange={(e) => setReportType(e)}
+                                                            >
+                                                                <Option value="Spam">Spam</Option>
+                                                                <Option value="Violence">Violence</Option>
+                                                                <Option value="Pornography">Pornography</Option>
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Form>
+                                                </Modal>
                                             </div>)
                                             : null
                                         }
@@ -258,6 +309,15 @@ const News: React.FC = () => {
                                         width="350"
                                         height="350" 
                                     />
+                                    <Divider />
+                                    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                        <div>
+                                            <HeartOutlined /> Like
+                                        </div>
+                                        <div>
+                                            <CommentOutlined /> Comments
+                                        </div>
+                                    </div>
                               </Card>
                             )
                         })}
@@ -265,6 +325,9 @@ const News: React.FC = () => {
                 </Col>
                 <Col span={2}>
                     Popular Author's
+                    Photos
+                    People
+                    Chat's
                 </Col>
             </Row>
         </div>

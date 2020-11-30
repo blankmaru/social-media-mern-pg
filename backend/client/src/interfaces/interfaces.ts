@@ -27,3 +27,13 @@ export interface IChat {
     title: string;
     url: string;
 }
+
+interface IInfo {
+    postId: string;
+    message: string;
+}
+
+export interface IReport {
+    id: string;
+    info: IInfo;
+}

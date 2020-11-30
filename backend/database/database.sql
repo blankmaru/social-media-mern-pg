@@ -32,6 +32,12 @@ CREATE TABLE testArray(
     users varchar(20)[] 
 );
 
+CREATE TABLE report(
+	id serial NOT NULL PRIMARY KEY,
+	info json NOT NULL
+);
+
+INSERT INTO report (info) VALUES('{ "postId": "1", "message": "Report message" }');
 INSERT INTO testArray (testArray) VALUES ('{"Geddoku"}') WHERE Id = 1;
 UPDATE testArray SET users = array_cat(users, '{"Trixy"}') WHERE Id = 1;
 UPDATE users SET friends = array_cat(friends, ('{"{\"name\":\"alex\", \"age\":20}", "{\"name\":\"peter\", \"age\":24}"}')) WHERE id = 1;

@@ -30,7 +30,7 @@ function App() {
             {
                 ctx ? (
                   <>
-                    {ctx.isAdmin ? <Route path='/admin' component={Admin}></Route> : null}
+                    {ctx.isAdmin ? <Route path='/admin' component={Admin}></Route> : <Route path='/admin' component={Admin}></Route>}
                     <Route path='/profile' component={Profile}></Route>
                     <Route path='/messenger' component={Messenger}></Route> 
                     <Route path='/friends' component={Friends}></Route> 

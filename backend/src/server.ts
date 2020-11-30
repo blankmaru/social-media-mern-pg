@@ -22,10 +22,11 @@ import usersRoutes from './routes/user.routes'
 import postsRoutes from './routes/post.routes'
 import friendsRoutes from './routes/friend.routes'
 import chatRoutes from './routes/chat.routes'
+import reportRoutes from './routes/report.routes'
 
 import { QueryResult } from 'pg'
 import { pool } from './database'
-import { IDatabaseUser, IUser } from './interfaces/UserInterface'
+import { IDatabaseUser } from './interfaces/UserInterface'
 import { IMessage } from '../client/src/interfaces/interfaces'
 
 app.use(express.json())
@@ -150,6 +151,7 @@ app.use('/api/users', usersRoutes)
 app.use('/api/posts', postsRoutes)
 app.use('/api/friends', friendsRoutes)
 app.use('/api/chats', chatRoutes)
+app.use('/api/reports', reportRoutes)
 
 app.use('/uploads', express.static('uploads'));
 
