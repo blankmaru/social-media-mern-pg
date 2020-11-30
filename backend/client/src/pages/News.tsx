@@ -20,6 +20,7 @@ import {
     EditOutlined,
     ExclamationCircleOutlined,
     HeartOutlined,
+    HeartFilled,
     CommentOutlined
 } from '@ant-design/icons'
 import { IPost } from '../interfaces/interfaces'
@@ -130,6 +131,14 @@ const News: React.FC = () => {
                 window.location.href = "/"
             }, 1000)
         })
+    }
+
+    const like = (item: IPost) => {
+        console.log(item.likes + 1)
+    }
+
+    const unlike = (item: IPost) => {
+        console.log(item.likes - 1)
     }
 
     return (
@@ -311,11 +320,11 @@ const News: React.FC = () => {
                                     />
                                     <Divider />
                                     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                        <div>
-                                            <HeartOutlined /> Like
+                                        <div onClick={() => like(item)}>
+                                            <HeartOutlined /> Like {item.likes}
                                         </div>
                                         <div>
-                                            <CommentOutlined /> Comments
+                                            <CommentOutlined /> Comments 
                                         </div>
                                     </div>
                               </Card>
@@ -324,10 +333,10 @@ const News: React.FC = () => {
                     </div>
                 </Col>
                 <Col span={2}>
-                    Popular Author's
-                    Photos
-                    People
-                    Chat's
+                    <p>Popular Author's</p>
+                    <p>Photos</p>
+                    <p>People</p>
+                    <p>Chat's</p>
                 </Col>
             </Row>
         </div>
