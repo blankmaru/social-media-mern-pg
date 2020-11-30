@@ -16,6 +16,9 @@ import {
     Spin
 } from 'antd';
 import { myContext } from '../Context';
+import {
+    SendOutlined
+} from '@ant-design/icons'
 
 const apiServer = 'http://localhost:5000';
 const socketServer = 'ws://localhost:5000';
@@ -196,7 +199,7 @@ const Messenger: React.FC = () => {
 				</Col>
 				<Col span={16}>
                     <div>
-                    <h5>CHAT ROOM: {room} {room 
+                    <h5>Chat Room: {room} {room 
                     ? (<div>USERS IN CHAT: {users.length} </div>) 
                     : null}</h5>                  
                     </div>        
@@ -223,7 +226,7 @@ const Messenger: React.FC = () => {
                         </div>
                     </div>
                     <div>
-                        <Form style={{display: 'flex'}}>
+                        <Form>
                             <Form.Item style={{width: '100%'}}>
                                 <Input
                                     className="input"
@@ -235,8 +238,8 @@ const Messenger: React.FC = () => {
                                 />
                             </Form.Item>
                             <Form.Item>
-                                <Button onClick={e => sendMessage(e)}>
-                                    Send
+                                <Button style={{float: 'right'}} onClick={e => sendMessage(e)}>
+                                    Send <SendOutlined /> 
                                 </Button>
                             </Form.Item>
                         </Form>

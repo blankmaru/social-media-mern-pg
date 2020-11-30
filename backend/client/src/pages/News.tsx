@@ -53,7 +53,7 @@ const News: React.FC = () => {
             title,
             content,
             author: ctx,
-            image
+            image: image
         }, {
             withCredentials: true
         }).then((res: AxiosResponse) => {
@@ -134,18 +134,21 @@ const News: React.FC = () => {
                                         <Button onClick={submit}>
                                             ADD
                                         </Button>
-                                        <Dropzone onDrop={(acceptedFiles: Array<File>) => onSubmitImg(acceptedFiles)}>
-                                            {({getRootProps, getInputProps}) => (
-                                                <section style={{marginTop: '1rem'}}>
-                                                    <div {...getRootProps()}>
-                                                        <input {...getInputProps()} />
-                                                        <Button type="primary">
-                                                            <UploadOutlined /> Click to upload image
-                                                        </Button>
-                                                    </div>
-                                                </section>
-                                            )}
-                                        </Dropzone>
+                                        {image
+                                        ?   null
+                                        :   <Dropzone onDrop={(acceptedFiles: Array<File>) => onSubmitImg(acceptedFiles)}>
+                                                {({getRootProps, getInputProps}) => (
+                                                    <section style={{marginTop: '1rem'}}>
+                                                        <div {...getRootProps()}>
+                                                            <input {...getInputProps()} />
+                                                            <Button type="primary">
+                                                                <UploadOutlined /> Click to upload image
+                                                            </Button>
+                                                        </div>
+                                                    </section>
+                                                )}
+                                            </Dropzone>
+                                        }
                                     </Form.Item>
                                     <Form.Item>
                                         {image.substring(0, 7) === "uploads"
@@ -163,7 +166,7 @@ const News: React.FC = () => {
                     }
                     <div>
                         {status
-                        ?   <Spin style={{marginTop: '1rem'}} />  
+                        ?   <Spin style={{marginTop: '1rem' }} />  
                         :   null
                         }
                         {posts?.length === undefined
@@ -203,10 +206,24 @@ const News: React.FC = () => {
                                                         </Form.Item>
                                                         <Form.Item>
                                                             <TextArea 
-                                                            placeholder="Update Content"
-                                                            value={content} 
-                                                            onChange={(e) => setContent(e.target.value)}
+                                                                placeholder="Update Content"
+                                                                value={content} 
+                                                                onChange={(e) => setContent(e.target.value)}
                                                             />
+                                                        </Form.Item>
+                                                        <Form.Item>
+                                                        <Dropzone onDrop={(acceptedFiles: Array<File>) => onSubmitImg(acceptedFiles)}>
+                                                                {({getRootProps, getInputProps}) => (
+                                                                    <section style={{marginTop: '1rem'}}>
+                                                                        <div {...getRootProps()}>
+                                                                            <input {...getInputProps()} />
+                                                                            <Button block type="primary">
+                                                                                <UploadOutlined /> Click to change image
+                                                                            </Button>
+                                                                        </div>
+                                                                    </section>
+                                                                )}
+                                                            </Dropzone>
                                                         </Form.Item>
                                                     </Form>
                                                 </Modal>
@@ -233,6 +250,13 @@ const News: React.FC = () => {
                                     <Meta 
                                         title={item.title} 
                                         description={item.content} 
+                                    />
+                                    <img
+                                        style={{marginTop: '1rem'}} 
+                                        alt="example" 
+                                        src={item.image}
+                                        width="350"
+                                        height="350" 
                                     />
                               </Card>
                             )

@@ -17,11 +17,11 @@ export const getPosts = async (req: Request, res: Response): Promise<Response | 
 
 export const addPost = async (req: Request, res: Response): Promise<Response | undefined> => {
     try {
-        const { title, content, author } = req?.body
-        if (!title || !content || !author) {
+        const { title, content, author, image } = req?.body
+        if (!title || !content || !author || !image) {
             return res.status(400).send({ success: false })
         }
-        const response: QueryResult = await pool.query('INSERT INTO posts (title, content, author) VALUES ($1, $2, $3)', [title, content, author])
+        const response: QueryResult = await pool.query('INSERT INTO posts (title, content, author, image) VALUES ($1, $2, $3, $4)', [title, content, author, image])
         logger.info(`Post ${title} added`)
         return res.status(200).send({ message: 'Post successfully added!', success: true })
     } catch(err) {
@@ -33,8 +33,8 @@ export const addPost = async (req: Request, res: Response): Promise<Response | u
 export const updatePost = async (req: Request, res: Response): Promise<Response | undefined> => {
     try {
         const id = parseInt(req.params.id)
-        const { title, content } = req?.body
-        const response: QueryResult = await pool.query('UPDATE posts SET title = $1, content = $2 WHERE id = $3', [title, content, id])
+        const { title, content, image } = req?.body
+        const response: QueryResult = await pool.query('UPDATE posts SET title = $1, content = $2, image = $3 WHERE id = $4', [title, content, image, id])
         logger.info(`Post ${id} updated`)
         return res.status(200).json({ success: true })
     } catch(err) {

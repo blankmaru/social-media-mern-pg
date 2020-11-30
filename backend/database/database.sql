@@ -17,7 +17,8 @@ CREATE TABLE posts(
     content VARCHAR(255),
 	author json NOT NULL,
     likes INTEGER DEFAULT 0,
-    comments TEXT [] 
+    comments TEXT [],
+    image VARCHAR(127) UNIQUE
 );
 
 CREATE TABLE chats(

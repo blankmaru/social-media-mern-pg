@@ -14,6 +14,7 @@ export interface IPost {
     author: IUser;
     likes: number;
     comments: Array<string>;
+    image: string;
 }
 
 export interface IMessage {

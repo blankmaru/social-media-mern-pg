@@ -34,8 +34,8 @@ const Navbar: React.FC = () => {
     return (
         <Menu
           mode="inline"
-          theme="dark"
-          style={{height: '100vh'}}
+          theme="light"
+          style={{ position: 'absolute' }}
         >
             <Menu.Item>
                 <HomeOutlined />
