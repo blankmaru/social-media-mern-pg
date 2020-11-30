@@ -4,7 +4,7 @@ export interface IUser {
     email: string;
     isAdmin: boolean;
     friends: Array<IUser>,
-    posts: []
+    posts: number[]
 }
 
 export interface IPost {

@@ -27,7 +27,7 @@ import reportRoutes from './routes/report.routes'
 import { QueryResult } from 'pg'
 import { pool } from './database'
 import { IDatabaseUser } from './interfaces/UserInterface'
-import { IMessage } from '../client/src/interfaces/interfaces'
+import { IMessage, IPost } from '../client/src/interfaces/interfaces'
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -76,10 +76,31 @@ app.post("/api/files/uploadfiles", (req, res) => {
 });
 
 io.on('connect', (socket: any) => {
+    // like/unlike post
+    socket.on('like', (data: any) => {
+      let userId = parseInt(data.id)
+      let postId = parseInt(data.data.id)
+      pool.query('UPDATE posts SET likes = $1 WHERE id = $2', [data.data.likes, postId]).then(() => {
+        pool.query('UPDATE users SET posts = array_append(posts, $1) WHERE id = $2', [postId, userId]).then(() => {
+          return io.emit('Output like', { success: true })
+        })
+      })
+    })
+
+    socket.on('unlike', (data: any) => {
+      let userId = parseInt(data.id)
+      let postId = parseInt(data.data.id)
+      pool.query('UPDATE posts SET likes = $1 WHERE id = $2', [data.data.likes, postId]).then(() => {
+        pool.query('UPDATE users SET posts = array_remove(posts, $1) WHERE id = $2', [postId, userId]).then(() => {
+          return io.emit('Output unlike', { success: true })
+        })
+      })
+    })
+
     socket.on('join', ({ name, room }: { name: string, room: string}, callback: Function) => {
         const { error, user } = addUser({ id: socket.id, name, room });
     
-        if(error) return callback(error);
+        if (error) return error
     
         socket.join(user.room);
     

@@ -11,8 +11,7 @@ import {
     Modal,
     Empty,
     Image,
-    Select,
-    
+    Select
 } from 'antd';
 import {
     UploadOutlined,
@@ -27,10 +26,15 @@ import { IPost } from '../interfaces/interfaces'
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { myContext } from '../Context';
 import Dropzone from 'react-dropzone';
+import io from 'socket.io-client'
 
 const { Meta } = Card;
 const { TextArea } = Input;
 const { Option } = Select;
+
+const socketServer = 'ws://localhost:5000';
+
+let socket: SocketIOClient.Socket;
 
 const News: React.FC = () => {
     const ctx = useContext(myContext)
@@ -55,6 +59,20 @@ const News: React.FC = () => {
             console.log(res.data)
         })
     }, [])
+
+    useEffect(() => {
+        socket = io(socketServer, {
+            transportOptions: ['websocket']
+        });
+
+        socket.on('Output like', (msg: any) => {
+            console.log(msg)
+        })
+
+        socket.on('Output unlike', (msg: any) => {
+            console.log(msg)
+        })
+    }, [socketServer])
 
     const submit = () => {
         Axios.post('http://localhost:5000/api/posts', {
@@ -134,11 +152,19 @@ const News: React.FC = () => {
     }
 
     const like = (item: IPost) => {
-        console.log(item.likes + 1)
+        ++item.likes
+        socket.emit('like', {
+            data: item,
+            id: ctx.id
+        });
     }
 
     const unlike = (item: IPost) => {
-        console.log(item.likes - 1)
+        --item.likes
+        socket.emit('unlike', {
+            data: item,
+            id: ctx.id
+        });
     }
 
     return (
@@ -320,9 +346,15 @@ const News: React.FC = () => {
                                     />
                                     <Divider />
                                     <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                        <div onClick={() => like(item)}>
-                                            <HeartOutlined /> Like {item.likes}
-                                        </div>
+                                        {ctx 
+                                        ?   ctx.posts?.includes(parseInt(item.id)) 
+                                                ?   (<div onClick={() => unlike(item)}>
+                                                        <HeartFilled /> Like {item.likes}
+                                                    </div>)
+                                                :   (<div onClick={() => like(item)}>
+                                                        <HeartOutlined /> Like {item.likes}
+                                                    </div>) 
+                                        :   null}
                                         <div>
                                             <CommentOutlined /> Comments 
                                         </div>

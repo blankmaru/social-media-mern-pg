@@ -8,7 +8,7 @@ CREATE TABLE users(
     email TEXT,
     isAdmin BOOLEAN DEFAULT false,
     friends TEXT [],
-    posts TEXT [] 
+    posts INTEGER [] 
 );
 
 CREATE TABLE posts(
