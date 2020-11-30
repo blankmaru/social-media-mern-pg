@@ -4,6 +4,9 @@ import {
     Col, 
     Spin,
     Empty,
+    List,
+    Card,
+    Image
 } from 'antd';
 import { IPost } from '../../interfaces/interfaces'
 import Axios, { AxiosResponse } from 'axios';
@@ -12,6 +15,37 @@ import { myContext } from '../../Context';
 import AddPost from './AddPost'
 import PostItem from './PostItem'
 
+
+// raw data template
+const data = [
+    {
+      title: 'Geddoku',
+    },
+    {
+      title: 'Trixy',
+    },
+    {
+      title: 'aSSa',
+    },
+    {
+      title: 'FGD2',
+    },
+];
+
+const chats = [
+    {
+        title: 'Music',
+    },
+    {
+        title: 'Sport',
+    },
+    {
+        title: 'Adventure',
+    },
+    {
+        title: 'Games',
+    },
+]
 
 const News: React.FC = () => {
     const ctx = useContext(myContext)
@@ -29,7 +63,7 @@ const News: React.FC = () => {
     return (
         <div>
             <Row>
-                <Col span={20}>
+                <Col span={18}>
                     {ctx 
                     ? <AddPost />
                     : null
@@ -48,11 +82,58 @@ const News: React.FC = () => {
                         })}
                     </div>
                 </Col>
-                <Col span={2}>
+                <Col span={4}>
                     <p>Popular Author's</p>
-                    <p>Photos</p>
-                    <p>People</p>
-                    <p>Chat's</p>
+                    <div>
+                        <p>Photos</p>
+                        <List
+                            grid={{ gutter: 8, column: 2 }}
+                            dataSource={data}
+                            renderItem={item => (
+                            <List.Item>
+                                <Card>
+                                    <Image 
+                                        src="https://i.pinimg.com/originals/e2/bc/e5/e2bce5c32c716244954b3020fe1c695e.jpg"  
+                                    />
+                                </Card>
+                            </List.Item>
+                            )}
+                        />
+                    </div>
+                    
+                    <div>
+                        <p>People</p>
+                        <List
+                            grid={{ gutter: 8, column: 2 }}
+                            dataSource={data}
+                            renderItem={item => (
+                            <List.Item>
+                                <Card>
+                                    <a>
+                                        {item.title}
+                                    </a>
+                                </Card>
+                            </List.Item>
+                            )}
+                        />
+                    </div>
+
+                    <div>
+                        <p>Chat's</p>
+                        <List
+                            grid={{ gutter: 8, column: 2 }}
+                            dataSource={chats}
+                            renderItem={item => (
+                            <List.Item>
+                                <Card>
+                                    <a>
+                                        {item.title}
+                                    </a>
+                                </Card>
+                            </List.Item>
+                            )}
+                        />
+                    </div>
                 </Col>
             </Row>
         </div>

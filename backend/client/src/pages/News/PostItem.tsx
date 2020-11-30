@@ -131,6 +131,10 @@ export default function PostItem(props: PostProps) {
         });
     }
 
+    const redirect = (id: string) => {
+        window.location.href = `/comments/${id}`
+    }
+
 	return (
 		<Card hoverable style={{ width: '75%', marginTop: '1rem' }} key={props.item.id}>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -235,7 +239,7 @@ export default function PostItem(props: PostProps) {
 						</div>
 					)
 				) : null}
-				<div>
+				<div onClick={() => redirect(props.item.id)}>
 					<CommentOutlined /> Comments
 				</div>
 			</div>
