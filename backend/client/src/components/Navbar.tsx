@@ -12,8 +12,7 @@ import {
     SettingOutlined,
     UsergroupAddOutlined,
     MessageOutlined,
-    NotificationOutlined,
-    CommentOutlined
+    NotificationOutlined
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { myContext } from '../Context'
@@ -70,10 +69,6 @@ const Navbar: React.FC = () => {
                     <Menu.Item>
                         <SettingOutlined />
                         <Link to="/settings">Settings</Link>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <CommentOutlined />
-                        <Link to="/comments">Comments</Link>
                     </Menu.Item>
                     <Menu.Item onClick={logout}>
                         <LogoutOutlined />

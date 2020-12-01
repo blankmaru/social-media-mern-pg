@@ -132,7 +132,7 @@ export default function PostItem(props: PostProps) {
     }
 
     const redirect = (id: string) => {
-        window.location.href = `/comments/${id}`
+        window.location.href = `/comments/?post=${id}`
     }
 
 	return (

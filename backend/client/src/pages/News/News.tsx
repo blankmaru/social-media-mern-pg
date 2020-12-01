@@ -49,7 +49,7 @@ const chats = [
 
 const News: React.FC = () => {
     const ctx = useContext(myContext)
-    const [posts, setPosts] = useState<Array<IPost>>()
+    const [posts, setPosts] = useState<Array<IPost>>([])
     const [status, setStatus] = useState<boolean>(false)
 
     useEffect(() => {
@@ -73,11 +73,11 @@ const News: React.FC = () => {
                         ?   <Spin style={{marginTop: '1rem' }} />  
                         :   null
                         }
-                        {posts?.length === undefined
+                        {posts.length < 1
                         ? <Empty style={{ width: '75%', marginTop: '1rem' }} />
                         : posts?.map((item) => {
                             return (
-                                <PostItem item={item} />
+                                <PostItem key={item.id} item={item} />
                             )
                         })}
                     </div>
@@ -91,11 +91,9 @@ const News: React.FC = () => {
                             dataSource={data}
                             renderItem={item => (
                             <List.Item>
-                                <Card>
                                     <Image 
                                         src="https://i.pinimg.com/originals/e2/bc/e5/e2bce5c32c716244954b3020fe1c695e.jpg"  
                                     />
-                                </Card>
                             </List.Item>
                             )}
                         />

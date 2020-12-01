@@ -1,46 +1,101 @@
-import React from 'react';
-import { Comment, Avatar, Form, Button, Input, Row, Col, Tooltip } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import { 
+	Comment, 
+	Form, 
+	Button, 
+	Input, 
+	Row, 
+	Col, 
+	Tooltip, 
+	Empty 
+} from 'antd';
 import moment from 'moment';
+import { IComment } from 'src/interfaces/interfaces';
+import { myContext } from 'src/Context';
+import io from 'socket.io-client'
+import { match } from 'react-router-dom';
 
-const Comments = () => {
+const socketServer = 'ws://localhost:5000';
+
+let socket: SocketIOClient.Socket;
+
+interface CommentProps {
+	location: Location,
+	match: match
+}
+
+const Comments = (props: CommentProps) => {
+	const ctx = useContext(myContext)
+	const urlParams = new URLSearchParams(window.location.search);
+	const postId = urlParams.get('post');
+	const [comments, setComments] = useState<Array<IComment>>([])
+	const [content, setContent] = useState<string>('')
+
+	useEffect(() => {
+		socket = io(socketServer, {
+            transportOptions: ['websocket']
+		});
+
+		socket.emit('getComments', { postId })
+
+	}, [socketServer])
+
+	const sendComment = () => {
+		const comment: IComment = {
+			author: ctx.username!,
+			content: content
+		}
+
+		socket.emit('sendComment', { comment, postId })
+	}
+
 	return (
 		<Row>
 			<Col span={12}>
-				<Comment
-					author={<strong>Han Solo</strong>}
-					avatar={
-						<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
-					}
-					content={
-						<p>
-							We supply a series of design principles, practical patterns and high quality design
-							resources (Sketch and Axure), to help people create their product prototypes beautifully and
-							efficiently.
-						</p>
-					}
-					datetime={
-						<Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-							<span>{moment().fromNow()}</span>
-						</Tooltip>
-					}
-				/>
+				{comments.length < 1 
+				?	<Empty /> 
+				:	comments?.map((comment) => {
+					return (<Comment
+							style={{width: '90%', padding: '1rem'}}
+							author={<strong>{comment.author}</strong>}
+							content={
+								<p>{comment.content}</p>
+							}
+							datetime={
+								<Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
+									<span>{moment().fromNow()}</span>
+								</Tooltip>
+							}
+						/>)
+					})
+				}
 			</Col>
 			<Col span={12}>
-				<h5>Leave a comment</h5>
-				<Comment
-					content={
-						<>
-							<Form.Item>
-								<Input.TextArea rows={4} />
-							</Form.Item>
-							<Form.Item>
-								<Button htmlType="submit" type="primary">
-									POST COMMENT
-								</Button>
-							</Form.Item>
-						</>
-					}
-				/>
+				{ctx 
+				? 
+				<>
+					<h5>Leave a comment</h5>
+					<Comment
+						content={
+							<>
+								<Form.Item>
+									<Input.TextArea 
+										rows={4} 
+										placeholder="Type comment here" 
+										value={content}
+										onChange={(e) => setContent(e.target.value)}
+									/>
+								</Form.Item>
+								<Form.Item>
+									<Button onClick={sendComment} htmlType="submit" type="primary">
+										POST COMMENT
+									</Button>
+								</Form.Item>
+							</>
+						}
+					/>
+				</>
+				: null}
 			</Col>
 		</Row>
 	);

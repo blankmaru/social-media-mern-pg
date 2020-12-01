@@ -97,6 +97,15 @@ io.on('connect', (socket: any) => {
       })
     })
 
+    // post comments
+    socket.on('getComments', (data: any) => {
+      console.log(data.postId)
+    })
+
+    socket.on('sendComment', (data: any) => {
+      console.log({ postId: data.postId, comment: data.comment })
+    })
+
     socket.on('join', ({ name, room }: { name: string, room: string}, callback: Function) => {
         const { error, user } = addUser({ id: socket.id, name, room });
     

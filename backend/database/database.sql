@@ -17,7 +17,7 @@ CREATE TABLE posts(
     content VARCHAR(255),
 	author json NOT NULL,
     likes INTEGER DEFAULT 0,
-    comments TEXT [],
+    comments json [],
     image VARCHAR(127) UNIQUE
 );
 
@@ -42,3 +42,4 @@ INSERT INTO testArray (testArray) VALUES ('{"Geddoku"}') WHERE Id = 1;
 UPDATE testArray SET users = array_cat(users, '{"Trixy"}') WHERE Id = 1;
 UPDATE users SET friends = array_cat(friends, ('{"{\"name\":\"alex\", \"age\":20}", "{\"name\":\"peter\", \"age\":24}"}')) WHERE id = 1;
 UPDATE users SET friends = array_remove(friends, 'Trixy') WHERE id = 3;
+UPDATE posts SET comments = array_append(comments, '{ "author": "Trixy", "content": "wtf?!" }') WHERE id = 1;

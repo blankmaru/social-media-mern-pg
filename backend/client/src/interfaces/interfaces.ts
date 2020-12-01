@@ -37,3 +37,8 @@ export interface IReport {
     id: string;
     info: IInfo;
 }
+
+export interface IComment {
+    author: string;
+    content: string;
+}
