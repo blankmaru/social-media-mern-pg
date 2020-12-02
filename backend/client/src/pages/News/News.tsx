@@ -10,7 +10,7 @@ import {
     Avatar,
     Carousel
 } from 'antd';
-import { IPost, IUser, IImage } from '../../interfaces/interfaces'
+import { IPost, IUser, IImage, IChat } from '../../interfaces/interfaces'
 import Axios, { AxiosResponse } from 'axios';
 import { myContext } from '../../Context';
 
@@ -19,38 +19,6 @@ import PostItem from './PostItem'
 import { Link } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid'
 
-
-// raw data template
-const data = [
-    {
-      title: 'Geddoku',
-    },
-    {
-      title: 'Trixy',
-    },
-    {
-      title: 'aSSa',
-    },
-    {
-      title: 'FGD2',
-    },
-];
-
-const chats = [
-    {
-        title: 'Music',
-    },
-    {
-        title: 'Sport',
-    },
-    {
-        title: 'Adventure',
-    },
-    {
-        title: 'Games',
-    },
-]
-
 const News: React.FC = () => {
     const ctx = useContext(myContext)
     const [posts, setPosts] = useState<Array<IPost>>([])
@@ -58,8 +26,11 @@ const News: React.FC = () => {
 
     const [peoples, setPeoples] = useState<Array<IUser>>([])
     const [images, setImages] = useState<Array<IImage>>([])
+    const [users, setUsers] = useState<Array<IUser>>([])
+    const [chats, setChats] = useState<Array<IChat>>([])
 
     useEffect(() => {
+        // Sidebar post users
         Axios.get('http://localhost:5000/api/news/peoples', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
@@ -67,12 +38,28 @@ const News: React.FC = () => {
             console.log(res.data)
         })
 
+        // get all users
+        Axios.get('http://localhost:5000/api/users/', {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            setUsers(res.data.reverse())
+        })
+
+        // get all chats
+        Axios.get('http://localhost:5000/api/chats/', {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            setChats(res.data.reverse())
+        })
+
+        // get recently images
         Axios.get('http://localhost:5000/api/news/images', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setImages(res.data.images.reverse())
         })
 
+        // get all posts
         Axios.get('http://localhost:5000/api/posts', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
@@ -149,11 +136,11 @@ const News: React.FC = () => {
                             <List
                                 style={{paddingTop: '1rem'}}
                                 grid={{ gutter: 16, column: 4 }}
-                                dataSource={data}
+                                dataSource={users}
                                 renderItem={item => (
                                     <List.Item>
                                         <Avatar size="large">
-                                            <Link style={{color: 'white'}} to={`/profile/${item.title}`}>{item.title}</Link>
+                                            <Link style={{color: 'white'}} to={`/profile/${item.username}`}>{item.username}</Link>
                                         </Avatar>
                                     </List.Item>
                                 )}
