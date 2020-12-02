@@ -42,3 +42,7 @@ export interface IComment {
     author: string;
     content: string;
 }
+
+export interface IImage {
+    image: string;
+}

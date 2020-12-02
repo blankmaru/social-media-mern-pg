@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { QueryResult } from 'pg'
+import { IPost } from '../../client/src/interfaces/interfaces'
 
 import { pool } from '../database'
 import { logger } from '../log/logger'
@@ -21,7 +22,7 @@ export const addPost = async (req: Request, res: Response): Promise<Response | u
         if (!title || !content || !author || !image) {
             return res.status(400).send({ success: false })
         }
-        const response: QueryResult = await pool.query('INSERT INTO posts (title, content, author, image) VALUES ($1, $2, $3, $4)', [title, content, author, image])
+        pool.query('INSERT INTO posts (title, content, author, image) VALUES ($1, $2, $3, $4)', [title, content, author, image])
         logger.info(`Post ${title} added`)
         return res.status(200).send({ message: 'Post successfully added!', success: true })
     } catch(err) {

@@ -10,14 +10,14 @@ import {
     Avatar,
     Carousel
 } from 'antd';
-import { IPost, IUser } from '../../interfaces/interfaces'
+import { IPost, IUser, IImage } from '../../interfaces/interfaces'
 import Axios, { AxiosResponse } from 'axios';
 import { myContext } from '../../Context';
 
 import AddPost from './AddPost'
 import PostItem from './PostItem'
 import { Link } from 'react-router-dom';
-import { CrownOutlined } from '@ant-design/icons';
+import { v4 as uuid4 } from 'uuid'
 
 
 // raw data template
@@ -51,21 +51,13 @@ const chats = [
     },
 ]
 
-const images = [
-    {
-        src: 'https://i.pinimg.com/originals/e2/bc/e5/e2bce5c32c716244954b3020fe1c695e.jpg'
-    },
-    {
-        src: 'https://i.pinimg.com/originals/e2/bc/e5/e2bce5c32c716244954b3020fe1c695e.jpg'
-    }
-]
-
 const News: React.FC = () => {
     const ctx = useContext(myContext)
     const [posts, setPosts] = useState<Array<IPost>>([])
     const [status, setStatus] = useState<boolean>(false)
 
     const [peoples, setPeoples] = useState<Array<IUser>>([])
+    const [images, setImages] = useState<Array<IImage>>([])
 
     useEffect(() => {
         Axios.get('http://localhost:5000/api/news/peoples', {
@@ -73,6 +65,12 @@ const News: React.FC = () => {
         }).then((res: AxiosResponse) => {
             setPeoples(res.data.reverse())
             console.log(res.data)
+        })
+
+        Axios.get('http://localhost:5000/api/news/images', {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+            setImages(res.data.images.reverse())
         })
 
         Axios.get('http://localhost:5000/api/posts', {
@@ -109,19 +107,22 @@ const News: React.FC = () => {
                     <div>
                         <Card>
                             <strong>Popular Author's</strong>
-                            <List
-                                style={{paddingTop: '1rem'}}
-                                grid={{ gutter: 16, column: 4 }}
-                                dataSource={peoples}
-                                renderItem={item => (
-                                    <List.Item>
-                                        <div style={{display: 'flex', alignItems: 'center'}}>
-                                            <CrownOutlined />
-                                            <Link style={{ color: 'gold' }} to={`/profile/${item.username}`}>{item.username}</Link>
+                            <div style={{paddingTop: '1rem'}}>
+                                {peoples.map((item) => {
+                                    return (
+                                        <div 
+                                            key={uuid4()}
+                                            style={{
+                                                display: 'flex', 
+                                                alignItems: 'center'
+                                            }}
+                                        >
+                                            {/* <CrownOutlined /> */}
+                                            <Link style={{ color: 'black' }} to={`/profile/${item.username}`}>{item.username}</Link>
                                         </div>
-                                    </List.Item>
-                                )}
-                            />
+                                    )
+                                })}
+                            </div>
                         </Card>
                     </div>
 
@@ -131,8 +132,9 @@ const News: React.FC = () => {
                             <Carousel autoplay style={{paddingTop: '1rem'}}>
                                 {images.map((image) => {
                                     return (
-                                        <Image 
-                                            src={image.src}
+                                        <Image
+                                            key={uuid4()} 
+                                            src={image.image}
                                         />
                                     )
                                 })

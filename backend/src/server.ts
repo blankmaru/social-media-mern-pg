@@ -23,6 +23,7 @@ import postsRoutes from './routes/post.routes'
 import friendsRoutes from './routes/friend.routes'
 import chatRoutes from './routes/chat.routes'
 import reportRoutes from './routes/report.routes'
+import newsRoutes from './routes/news.routes'
 
 import { QueryResult } from 'pg'
 import { pool } from './database'
@@ -81,7 +82,7 @@ io.on('connect', (socket: any) => {
       let userId = parseInt(data.id)
       let postId = parseInt(data.data.id)
       pool.query('UPDATE posts SET likes = $1 WHERE id = $2', [data.data.likes, postId]).then(() => {
-        pool.query('UPDATE users SET posts = array_append(posts, $1) WHERE id = $2', [postId, userId]).then(() => {
+        pool.query('UPDATE users SET likedPosts = array_append(likedPosts, $1) WHERE id = $2', [postId, userId]).then(() => {
           return io.emit('Output like', { success: true, postId })
         })
       })
@@ -91,19 +92,21 @@ io.on('connect', (socket: any) => {
       let userId = parseInt(data.id)
       let postId = parseInt(data.data.id)
       pool.query('UPDATE posts SET likes = $1 WHERE id = $2', [data.data.likes, postId]).then(() => {
-        pool.query('UPDATE users SET posts = array_remove(posts, $1) WHERE id = $2', [postId, userId]).then(() => {
+        pool.query('UPDATE users SET likedPosts = array_remove(likedPosts, $1) WHERE id = $2', [postId, userId]).then(() => {
           return io.emit('Output unlike', { success: true })
         })
       })
     })
 
     // post comments
-    socket.on('getComments', (data: any) => {
-      console.log(data.postId)
+    socket.on('getComments', async (data: any) => {
+      const response: QueryResult = await pool.query('SELECT comments FROM posts WHERE id = $1', [data.postId])
+      return io.emit('Output comments', response.rows)
     })
 
-    socket.on('sendComment', (data: any) => {
-      console.log({ postId: data.postId, comment: data.comment })
+    socket.on('sendComment', async (data: any) => {
+      const response: QueryResult = await pool.query('UPDATE posts SET comments = array_append(comments, $1) WHERE id = $2', [data.comment, data.postId])
+      return io.emit('Output send comment', data.comment)
     })
 
     socket.on('join', ({ name, room }: { name: string, room: string}, callback: Function) => {
@@ -182,6 +185,7 @@ app.use('/api/posts', postsRoutes)
 app.use('/api/friends', friendsRoutes)
 app.use('/api/chats', chatRoutes)
 app.use('/api/reports', reportRoutes)
+app.use('/api/news', newsRoutes)
 
 app.use('/uploads', express.static('uploads'));
 
