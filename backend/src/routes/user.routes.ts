@@ -20,6 +20,7 @@ router.get('/logOut', logOut)
 
 // Admin routes
 router.get('/', getUsers)
-router.delete('/:id', isAdminMiddleware, deleteUser)
+// add admin middleware in prod mode
+router.delete('/:id', deleteUser)
 
 export default router

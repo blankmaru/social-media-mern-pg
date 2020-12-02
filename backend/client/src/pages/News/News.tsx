@@ -34,7 +34,7 @@ const News: React.FC = () => {
         Axios.get('http://localhost:5000/api/news/peoples', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
-            setPeoples(res.data.reverse())
+            setPeoples(res.data.slice(0, 4))
             console.log(res.data)
         })
 
@@ -105,7 +105,7 @@ const News: React.FC = () => {
                                             }}
                                         >
                                             {/* <CrownOutlined /> */}
-                                            <Link style={{ color: 'black' }} to={`/profile/${item.username}`}>{item.username}</Link>
+                                            <Link style={{ color: 'black', fontWeight: 600 }} to={`/profile/${item.username}`}>{item.username}</Link>
                                         </div>
                                     )
                                 })}

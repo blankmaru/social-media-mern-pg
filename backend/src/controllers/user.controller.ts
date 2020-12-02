@@ -67,6 +67,7 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         const id = parseInt(req.params.id)
+        console.log(id)
         const response: QueryResult = await pool.query('DELETE FROM users WHERE id = $1', [id])
         logger.info(`User ${id} was deleted`)
         return res.status(200).json({ message: 'User deleted'})
