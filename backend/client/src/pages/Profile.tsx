@@ -32,7 +32,7 @@ export default function Profile() {
         <div>
             <div style={{ margin: 'auto', width: '80%' }}>
                 <img 
-                    src="https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77701178114-1200x675.jpg"
+                    src="https://wallpapercave.com/wp/wp3306792.jpg"
                     width="100%"
                     height="250px"
                     style={{borderRadius: '1rem'}}
@@ -49,7 +49,7 @@ export default function Profile() {
                                 <EditOutlined /> EDIT
                             </Button>
                         :   <Button onClick={() => follow(user, ctx)} style={{marginTop: '1rem'}}>
-                                <UserOutlined />FOLLOW
+                                <UserOutlined /> FOLLOW
                             </Button>
                         }
                     </Card>
@@ -63,21 +63,21 @@ export default function Profile() {
                                 <p><PhoneOutlined /> 
                                 {user?.phone === null 
                                     ?   ' Empty'
-                                    :   user?.phone
+                                    :   ' ' + user?.phone
                                 }
                                 </p> } />
                             <Meta title={
                                 <p><HomeOutlined /> 
                                 {user?.address === null 
                                     ?   ' Empty'
-                                    :   user?.address
+                                    :   ' ' + user?.address
                                 }</p>} />
                             <Meta title={
                                 <React.Fragment>
                                     <h6 style={{fontWeight: 'bold'}}>Bio: </h6>
                                     <p>{user?.bio === null 
                                     ?   ' Empty'
-                                    :   user?.bio
+                                    :   ' ' + user?.bio
                                 }</p>
                                 </React.Fragment>
                             } />

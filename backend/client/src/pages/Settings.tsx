@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Collapse, Divider, Form, Input } from 'antd';
 import { ArrowRightOutlined, FacebookOutlined, GoogleOutlined, InstagramOutlined, ReloadOutlined,  } from '@ant-design/icons';
+import { serverURL } from '../config'
+import { myContext } from 'src/Context';
+import Axios, { AxiosResponse } from 'axios';
 
 const { Panel } = Collapse;
 
 function Settings() {
+    const ctx = useContext(myContext)
     const [phone, setPhone] = useState<string>()
     const [address, setAddress] = useState<string>()
     const [bio, setBio] = useState<string>()
+
+    const update = () => {
+        Axios.put(serverURL + `/api/users/${ctx.id}`, {
+            phone,
+            address,
+            bio
+        }, { withCredentials: true }).then((res: AxiosResponse) => {
+            console.log(res.data)
+            setTimeout(() => {
+                window.location.href = "/"
+            }, 1000)
+        })
+    }
 
 	return (
 		<div style={{ margin: 'auto', width: '50%' }}>
@@ -40,7 +57,7 @@ function Settings() {
 							/>
 						</Form.Item>
                         <Form.Item>
-							<Button>
+							<Button onClick={update}>
                                 <ReloadOutlined /> UPDATE
                             </Button>
 						</Form.Item>
@@ -48,7 +65,7 @@ function Settings() {
 				</Panel>
 			</Collapse>
 			<div style={{ marginTop: '1rem' }}>
-				<h6>Change password</h6>
+				<Button>Change password</Button>
 			</div>
 			<Divider />
 			<h5>Social Accounts</h5>

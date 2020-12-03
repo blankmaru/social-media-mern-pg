@@ -9,7 +9,8 @@ import {
     user,
     logOut,
     deleteUser,
-    getUser
+    getUser,
+    updateUserInfo
 } from '../controllers/user.controller'
 import { isAdminMiddleware } from '../middleware/admin';
 
@@ -21,6 +22,7 @@ router.get('/logOut', logOut)
 
 // User routes
 router.get('/:username', getUser)
+router.put('/:id', updateUserInfo)
 
 // Admin routes
 router.get('/', getUsers)
