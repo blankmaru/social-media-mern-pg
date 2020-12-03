@@ -63,6 +63,18 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
     }
 }
 
+export const getUser = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const username = req.params.username
+        const response: QueryResult = await pool.query('SELECT * FROM users WHERE username = $1', [username])
+        logger.info(`Users from DB: ${JSON.stringify(response.rows)}`)
+        return res.status(200).json(response.rows)
+    } catch(err) {
+        logger.error({ error: err })
+        return res.status(400).json({ error: err })
+    }
+}
+
 // Func for Admin
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {

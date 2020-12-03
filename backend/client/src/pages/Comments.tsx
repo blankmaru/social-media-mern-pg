@@ -28,8 +28,10 @@ interface CommentProps {
 
 const Comments = (props: CommentProps) => {
 	const ctx = useContext(myContext)
+
 	const urlParams = new URLSearchParams(window.location.search);
 	const postId = urlParams.get('post');
+	
 	const [comments, setComments] = useState<Array<IComment>>([])
 	const [content, setContent] = useState<string>('')
 

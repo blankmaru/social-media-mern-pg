@@ -8,7 +8,8 @@ import {
     login,
     user,
     logOut,
-    deleteUser
+    deleteUser,
+    getUser
 } from '../controllers/user.controller'
 import { isAdminMiddleware } from '../middleware/admin';
 
@@ -17,6 +18,9 @@ router.post('/register', register)
 router.post('/login', passport.authenticate('local'), login)
 router.get('/user', user)
 router.get('/logOut', logOut)
+
+// User routes
+router.get('/:username', getUser)
 
 // Admin routes
 router.get('/', getUsers)

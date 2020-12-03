@@ -120,6 +120,8 @@ const News: React.FC = () => {
                                 {images.map((image) => {
                                     return (
                                         <Image
+                                            width="300"
+                                            height="300"
                                             key={uuid4()} 
                                             src={image.image}
                                         />
@@ -140,7 +142,7 @@ const News: React.FC = () => {
                                 renderItem={item => (
                                     <List.Item>
                                         <Avatar size="large">
-                                            <Link style={{color: 'white'}} to={`/profile/${item.username}`}>{item.username}</Link>
+                                            <Link style={{color: 'white'}} to={`/profile/?username=${item.username}`}>{item.username}</Link>
                                         </Avatar>
                                     </List.Item>
                                 )}
