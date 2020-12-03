@@ -1,11 +1,76 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Button, Collapse, Divider, Form, Input } from 'antd';
+import { ArrowRightOutlined, FacebookOutlined, GoogleOutlined, InstagramOutlined, ReloadOutlined,  } from '@ant-design/icons';
+
+const { Panel } = Collapse;
 
 function Settings() {
-    return (
-        <div>
-            Settings
-        </div>
-    )
+    const [phone, setPhone] = useState<string>()
+    const [address, setAddress] = useState<string>()
+    const [bio, setBio] = useState<string>()
+
+	return (
+		<div style={{ margin: 'auto', width: '50%' }}>
+			<h5 style={{ marginBottom: '2rem' }}>
+				<ArrowRightOutlined /> Settings
+			</h5>
+			<h5>Account</h5>
+			<Collapse accordion>
+				<Panel header="Edit profile" key="1">
+					<Form>
+						<Form.Item>
+							<Input
+								placeholder="Update Phone"
+								value={phone}
+								onChange={(e) => setPhone(e.target.value)}
+							/>
+						</Form.Item>
+                        <Form.Item>
+							<Input
+								placeholder="Update Address"
+								value={address}
+								onChange={(e) => setAddress(e.target.value)}
+							/>
+						</Form.Item>
+                        <Form.Item>
+							<Input
+								placeholder="Update Bio"
+								value={bio}
+								onChange={(e) => setBio(e.target.value)}
+							/>
+						</Form.Item>
+                        <Form.Item>
+							<Button>
+                                <ReloadOutlined /> UPDATE
+                            </Button>
+						</Form.Item>
+					</Form>
+				</Panel>
+			</Collapse>
+			<div style={{ marginTop: '1rem' }}>
+				<h6>Change password</h6>
+			</div>
+			<Divider />
+			<h5>Social Accounts</h5>
+			<Collapse accordion>
+				<Panel header="Social accounts" key="1">
+                    <div>
+                        <InstagramOutlined /> <strong>Instagram</strong> 
+                    </div>
+                    <div>
+                        <FacebookOutlined /> <strong>Facebook</strong> 
+                    </div>
+                    <div>
+                        <GoogleOutlined /> <strong>Google</strong> 
+                    </div>
+				</Panel>
+			</Collapse>
+			<Divider />
+			<div>
+				<Button style={{ color: 'red', borderColor: 'red' }}>Delete Account</Button>
+			</div>
+		</div>
+	);
 }
 
-export default Settings
+export default Settings;

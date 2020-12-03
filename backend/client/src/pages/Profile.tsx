@@ -5,6 +5,8 @@ import { EditOutlined, HomeOutlined, MailOutlined, PhoneOutlined, UserOutlined }
 import { Link } from 'react-router-dom';
 import { IUser } from 'src/interfaces/interfaces';
 import Axios, { AxiosResponse } from 'axios';
+import { serverURL } from '../config'
+import { follow } from '../utils/utils'
 
 const { Meta } = Card;
 
@@ -17,7 +19,7 @@ export default function Profile() {
 
     useEffect(() => {
 
-        Axios.get(`http://localhost:5000/api/users/${username}`, {
+        Axios.get(serverURL + `/api/users/${username}`, {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setUser(res.data[0])
@@ -43,10 +45,10 @@ export default function Profile() {
                     >
                         <Meta title={user?.username} description={<><MailOutlined /> {user?.email}</>} />
                         {ctx.username === user?.username 
-                        ?   <Button style={{marginTop: '1rem'}}>
+                        ?   <Button onClick={() => window.location.href = "/settings"} style={{marginTop: '1rem'}}>
                                 <EditOutlined /> EDIT
                             </Button>
-                        :   <Button style={{marginTop: '1rem'}}>
+                        :   <Button onClick={() => follow(user, ctx)} style={{marginTop: '1rem'}}>
                                 <UserOutlined />FOLLOW
                             </Button>
                         }
@@ -57,12 +59,26 @@ export default function Profile() {
                     >
                         <h5 style={{fontWeight: 'bold'}}>About</h5>
                         <div style={{marginTop: '1rem'}}>
-                            <Meta title={<p><PhoneOutlined /> {user?.phone}</p> } />
-                            <Meta title={<p><HomeOutlined /> {user?.address}</p>} />
+                            <Meta title={
+                                <p><PhoneOutlined /> 
+                                {user?.phone === null 
+                                    ?   ' Empty'
+                                    :   user?.phone
+                                }
+                                </p> } />
+                            <Meta title={
+                                <p><HomeOutlined /> 
+                                {user?.address === null 
+                                    ?   ' Empty'
+                                    :   user?.address
+                                }</p>} />
                             <Meta title={
                                 <React.Fragment>
                                     <h6 style={{fontWeight: 'bold'}}>Bio: </h6>
-                                    <p>{user?.bio}</p>
+                                    <p>{user?.bio === null 
+                                    ?   ' Empty'
+                                    :   user?.bio
+                                }</p>
                                 </React.Fragment>
                             } />
                         </div>

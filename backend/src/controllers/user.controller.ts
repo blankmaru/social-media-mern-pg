@@ -75,6 +75,19 @@ export const getUser = async (req: Request, res: Response): Promise<Response> =>
     }
 }
 
+export const updateUserInfo = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const id = parseInt(req.params.id)
+        const { phone, address, bio } = req?.body
+        const response: QueryResult = await pool.query('UPDATE users SET phone = $1, address = $2, bio = $3 WHERE id = $4', [phone, address, bio, id])
+        logger.info(`User Updated successfully`)
+        return res.status(200).json(response.rows)
+    } catch(err) {
+        logger.error({ error: err })
+        return res.status(400).json({ error: err })
+    }
+}
+
 // Func for Admin
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {

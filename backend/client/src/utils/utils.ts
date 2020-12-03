@@ -2,8 +2,8 @@ import Axios, { AxiosResponse } from "axios"
 import { IUser } from "src/interfaces/interfaces"
 import { serverURL } from '../config'
 
-export const follow = (item: IUser, currentUser: Partial<IUser>) => {
-    const friendName: string = `{${item.username}}`
+export const follow = (item: IUser | undefined, currentUser: Partial<IUser>) => {
+    const friendName: string = `{${item?.username}}`
 
     Axios.put(serverURL + '/api/friends/follow', {
         name: friendName,
@@ -17,7 +17,7 @@ export const follow = (item: IUser, currentUser: Partial<IUser>) => {
     })
 }
 
-export const unfollow = (item: IUser, currentUser: Partial<IUser>) => {
+export const unfollow = (item: IUser | undefined, currentUser: Partial<IUser>) => {
     const friendName: string = `${item}`
 
     Axios.put(serverURL + '/api/friends/unfollow', {
