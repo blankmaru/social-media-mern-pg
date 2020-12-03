@@ -15,6 +15,7 @@ import Dropzone from 'react-dropzone';
 import { myContext } from 'src/Context';
 import { IPost } from 'src/interfaces/interfaces';
 import io from 'socket.io-client'
+import { serverURL } from '../../config'
 
 const socketServer = 'ws://localhost:5000';
 
@@ -28,10 +29,10 @@ export default function PostItem(props: PostProps) {
     const ctx = useContext(myContext)
     const [title, setTitle] = useState<string>('')
     const [content, setContent] = useState<string>('')
-    const [image, setImage] = useState<string>('')
+    const [, setImage] = useState<string>('')
 
     const [visible, setVisible] = useState<boolean>(false)
-    const [status, setStatus] = useState<boolean>(false)
+    const [, setStatus] = useState<boolean>(false)
 
     const [likes, setLikes] = useState<number>(0)
 
@@ -61,7 +62,7 @@ export default function PostItem(props: PostProps) {
     };
 
     const update = (id: string) => {
-        Axios.put(`http://localhost:5000/api/posts/${id}`)
+        Axios.put(serverURL + `/api/posts/${id}`)
             .then((res: AxiosResponse) => {
                 setTimeout(() => {
                     window.location.href = "/"
@@ -70,7 +71,7 @@ export default function PostItem(props: PostProps) {
     }
 
     const deletePost = (id: string) => {
-        Axios.delete(`http://localhost:5000/api/posts/${id}`)
+        Axios.delete(serverURL + `/api/posts/${id}`)
             .then((res: AxiosResponse) => {
                 setStatus(true)
                 setTimeout(() => {
@@ -84,7 +85,7 @@ export default function PostItem(props: PostProps) {
             postId: id,
             message: reportType
         }
-        Axios.post('http://localhost:5000/api/reports', { 
+        Axios.post(serverURL+ '/api/reports', { 
             info: JSON.stringify(report)
         }, {
             withCredentials: true

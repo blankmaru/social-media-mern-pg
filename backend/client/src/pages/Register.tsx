@@ -6,6 +6,7 @@ import {
     SendOutlined
 } from '@ant-design/icons'
 import Axios, { AxiosResponse } from 'axios';
+import { serverURL } from '../config'
 
 export default function Register() {
     const [username, setUsername] = useState<string>('')
@@ -13,7 +14,7 @@ export default function Register() {
     const [password, setPassword] = useState<string>('')
 
     const register = () => {
-        Axios.post('http://localhost:5000/api/users/register', {
+        Axios.post(serverURL + '/api/users/register', {
             username,
             email,
             password,

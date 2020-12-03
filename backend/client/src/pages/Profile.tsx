@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { myContext } from '../Context'
 import { Card, Button, List, Avatar  } from 'antd'
-import { EditOutlined, HomeOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import { EditOutlined, HomeOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { IUser } from 'src/interfaces/interfaces';
 import Axios, { AxiosResponse } from 'axios';
@@ -23,7 +23,7 @@ export default function Profile() {
             setUser(res.data[0])
             console.log(res.data)
         })
-        
+
     }, [username])
 
     return (
@@ -41,10 +41,15 @@ export default function Profile() {
                         style={{ width: '33%', borderRadius: '1rem' }}
                         cover={<img alt="example" src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/06/boruto-tying-headband-Cropped.jpg?q=50&fit=crop&w=960&h=500" />}
                     >
-                        <Meta title={user?.username } description={user?.email } />
+                        <Meta title={user?.username} description={<><MailOutlined /> {user?.email}</>} />
                         {ctx.username === user?.username 
-                        ? <Button style={{marginTop: '1rem'}}><EditOutlined /> EDIT</Button>
-                        : <Button style={{marginTop: '1rem'}}><UserOutlined />FOLLOW</Button>}
+                        ?   <Button style={{marginTop: '1rem'}}>
+                                <EditOutlined /> EDIT
+                            </Button>
+                        :   <Button style={{marginTop: '1rem'}}>
+                                <UserOutlined />FOLLOW
+                            </Button>
+                        }
                     </Card>
                     
                     <Card
@@ -52,12 +57,12 @@ export default function Profile() {
                     >
                         <h5 style={{fontWeight: 'bold'}}>About</h5>
                         <div style={{marginTop: '1rem'}}>
-                            <Meta title={<p><PhoneOutlined /> + 7 999-999-99</p> } />
-                            <Meta title={<p><HomeOutlined /> str. Konoha 9/3</p>} />
+                            <Meta title={<p><PhoneOutlined /> {user?.phone}</p> } />
+                            <Meta title={<p><HomeOutlined /> {user?.address}</p>} />
                             <Meta title={
                                 <React.Fragment>
                                     <h6 style={{fontWeight: 'bold'}}>Bio: </h6>
-                                    <p>I like Naruto & Boruto</p>
+                                    <p>{user?.bio}</p>
                                 </React.Fragment>
                             } />
                         </div>

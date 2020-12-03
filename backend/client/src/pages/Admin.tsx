@@ -4,6 +4,7 @@ import { Button, List, Row, Col, Table } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { myContext } from '../Context';
 import { IReport, IUser } from '../interfaces/interfaces';
+import { serverURL } from '../config'
 
 const { Column } = Table;
 
@@ -13,12 +14,12 @@ export default function Admin() {
     const [reports, setReports] = useState<Array<IReport>>();
 
 	useEffect(() => {
-		Axios.get('http://localhost:5000/api/users', {
+		Axios.get(serverURL + '/api/users', {
 			withCredentials: true,
 		}).then((res: AxiosResponse) => {
 			setUsers(res.data);
 		});
-		Axios.get('http://localhost:5000/api/reports', {
+		Axios.get(serverURL + '/api/reports', {
 			withCredentials: true,
 		}).then((res: AxiosResponse) => {
 			setReports(res.data);
@@ -26,7 +27,7 @@ export default function Admin() {
 	}, []);
 
 	const deleteUser = (userId: string) => {
-        Axios.delete(`http://localhost:5000/api/users/${userId}`)
+        Axios.delete(serverURL + `/api/users/${userId}`)
             .then((res: AxiosResponse) => {
                 window.location.href = "/admin"
             })

@@ -15,7 +15,6 @@ import { myContext } from 'src/Context';
 import io from 'socket.io-client'
 import { match } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { CloseOutlined } from '@ant-design/icons';
 
 const socketServer = 'ws://localhost:5000';
 
@@ -31,7 +30,7 @@ const Comments = (props: CommentProps) => {
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const postId = urlParams.get('post');
-	
+
 	const [comments, setComments] = useState<Array<IComment>>([])
 	const [content, setContent] = useState<string>('')
 

@@ -13,6 +13,7 @@ import {
 import { IPost, IUser, IImage, IChat } from '../../interfaces/interfaces'
 import Axios, { AxiosResponse } from 'axios';
 import { myContext } from '../../Context';
+import { serverURL } from '../../config'
 
 import AddPost from './AddPost'
 import PostItem from './PostItem'
@@ -22,7 +23,7 @@ import { v4 as uuid4 } from 'uuid'
 const News: React.FC = () => {
     const ctx = useContext(myContext)
     const [posts, setPosts] = useState<Array<IPost>>([])
-    const [status, setStatus] = useState<boolean>(false)
+    const [status] = useState<boolean>(false)
 
     const [peoples, setPeoples] = useState<Array<IUser>>([])
     const [images, setImages] = useState<Array<IImage>>([])
@@ -31,7 +32,7 @@ const News: React.FC = () => {
 
     useEffect(() => {
         // Sidebar post users
-        Axios.get('http://localhost:5000/api/news/peoples', {
+        Axios.get(serverURL + '/api/news/peoples', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setPeoples(res.data.slice(0, 4))
@@ -39,28 +40,28 @@ const News: React.FC = () => {
         })
 
         // get all users
-        Axios.get('http://localhost:5000/api/users/', {
+        Axios.get(serverURL + '/api/users/', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setUsers(res.data.reverse())
         })
 
         // get all chats
-        Axios.get('http://localhost:5000/api/chats/', {
+        Axios.get(serverURL + '/api/chats/', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setChats(res.data.reverse())
         })
 
         // get recently images
-        Axios.get('http://localhost:5000/api/news/images', {
+        Axios.get(serverURL + '/api/news/images', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setImages(res.data.images.reverse())
         })
 
         // get all posts
-        Axios.get('http://localhost:5000/api/posts', {
+        Axios.get(serverURL + '/api/posts', {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             setPosts(res.data.reverse())

@@ -4,6 +4,7 @@ import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import React, { useState, useContext } from 'react';
 import Dropzone from 'react-dropzone';
 import { myContext } from 'src/Context';
+import { serverURL } from '../../config'
 
 export default function AddPost() {
     const ctx = useContext(myContext)
@@ -13,7 +14,7 @@ export default function AddPost() {
     const [image, setImage] = useState<string>('')
     
     const submit = () => {
-        Axios.post('http://localhost:5000/api/posts', {
+        Axios.post(serverURL + '/api/posts', {
             title,
             content,
             author: ctx,

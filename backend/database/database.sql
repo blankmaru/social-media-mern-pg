@@ -9,7 +9,10 @@ CREATE TABLE users(
     isAdmin BOOLEAN DEFAULT false,
     friends TEXT [],
     posts INTEGER [],
-    likedPosts INTEGER [] 
+    likedPosts INTEGER [],
+    phone VARCHAR(40),
+    address VARCHAR(64),
+    bio VARCHAR(255)
 );
 
 CREATE TABLE posts(
