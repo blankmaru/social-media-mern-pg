@@ -10,7 +10,8 @@ import {
     logOut,
     deleteUser,
     getUser,
-    updateUserInfo
+    updateUserInfo,
+    uploadAvatar
 } from '../controllers/user.controller'
 import { isAdminMiddleware } from '../middleware/admin';
 
@@ -24,9 +25,12 @@ router.get('/logOut', logOut)
 router.get('/:username', getUser)
 router.put('/:id', updateUserInfo)
 
+// User Image uploading routes
+router.post('/uploadAvatar/:id', uploadAvatar)
+
 // Admin routes
 router.get('/', getUsers)
 // add admin middleware in prod mode
-router.delete('/:id', deleteUser)
+router.delete('/:id', isAdminMiddleware, deleteUser)
 
 export default router

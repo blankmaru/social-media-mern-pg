@@ -8,6 +8,8 @@ export interface IUser {
     phone: string;
     address: string;
     bio: string;
+    avatar: string;
+    bgCover: string;
 }
 
 export interface IPost {

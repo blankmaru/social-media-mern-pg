@@ -17,16 +17,14 @@ describe("testing user route", () => {
         expect(response.status).toBe(200);
     });
 
-    test('testing user register', async () => {
+    test('testing upload image', async () => {
         const response = await request(func.app)
-            .post('/api/users/register')
+            .post(`/api/users/uploadAvatar/${2}`)
             .send({
-                username: 'Alisa',
-                email: 'alisa@gmail.com',
-                password: '123456'
+                image: 'https://pbs.twimg.com/profile_images/1323445943228755968/BZ4OTcXZ_400x400.jpg'
             })
         expect(response.status).toBe(200)
-        expect(response.body).toHaveProperty('success')
-    });
+        expect(response.body).toHaveProperty("success")
+    })
 
 }) 

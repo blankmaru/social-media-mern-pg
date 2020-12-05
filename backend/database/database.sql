@@ -12,17 +12,19 @@ CREATE TABLE users(
     likedPosts INTEGER [],
     phone VARCHAR(40),
     address VARCHAR(64),
-    bio VARCHAR(255)
+    bio VARCHAR(255),
+    avatar VARCHAR(255),
+    bgCover VARCHAR(255)
 );
 
 CREATE TABLE posts(
 	id SERIAL NOT NULL PRIMARY KEY,
-    title VARCHAR(127) UNIQUE,
+    title VARCHAR(127),
     content VARCHAR(255),
 	author json NOT NULL,
     likes INTEGER DEFAULT 0,
     comments json [],
-    image VARCHAR(127) UNIQUE
+    image VARCHAR(127)
 );
 
 CREATE TABLE chats(

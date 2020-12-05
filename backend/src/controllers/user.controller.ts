@@ -9,7 +9,7 @@ import { logger } from '../log/logger'
 // Auth
 export const register = async (req: Request, res: Response): Promise<Response | undefined> => {
     try {
-        const { username, email, password, friends, posts } = req?.body
+        const { username, email, password, friends, posts, phone, address, bio } = req?.body
         if (!username || !email || !password || typeof username !== 'string' || typeof email !== 'string' || typeof password !== 'string') {
             return res.status(400).json({ message: 'Invalid values'})
         }
@@ -19,7 +19,7 @@ export const register = async (req: Request, res: Response): Promise<Response | 
             if (!doc.rows[0]) {
                 const hashedPassword = await bcrypt.hash(password, 10)
                 const response: QueryResult 
-                = await pool.query('INSERT INTO users (username, password, email, friends, posts) VALUES ($1, $2, $3, $4, $5)', [username, hashedPassword, email, friends, posts])
+                = await pool.query('INSERT INTO users (username, password, email, friends, posts, phone, address, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [username, hashedPassword, email, friends, posts, phone, address, bio])
                 console.log('Registered: ', true)
                 logger.info(`User ${username}, ${email}, password: ${hashedPassword} was created`)
                 return res.status(200).json({ message: 'User successfully registered!', success: true })
@@ -79,8 +79,23 @@ export const updateUserInfo = async (req: Request, res: Response): Promise<Respo
     try {
         const id = parseInt(req.params.id)
         const { phone, address, bio } = req?.body
+        
         const response: QueryResult = await pool.query('UPDATE users SET phone = $1, address = $2, bio = $3 WHERE id = $4', [phone, address, bio, id])
         logger.info(`User Updated successfully`)
+        return res.status(200).json({ success: true })
+    } catch(err) {
+        logger.error({ error: err })
+        return res.status(400).json({ error: err })
+    }
+}
+
+export const uploadAvatar = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const id = parseInt(req.params.id)
+        const { image } = req?.body
+
+        const response: QueryResult = await pool.query('UPDATE users SET avatar = $1 WHERE id = $2', [image, id])
+        logger.info(`User Avatar Updated successfully`)
         return res.status(200).json({ success: true })
     } catch(err) {
         logger.error({ error: err })
@@ -92,7 +107,6 @@ export const updateUserInfo = async (req: Request, res: Response): Promise<Respo
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         const id = parseInt(req.params.id)
-        console.log(id)
         const response: QueryResult = await pool.query('DELETE FROM users WHERE id = $1', [id])
         logger.info(`User ${id} was deleted`)
         return res.status(200).json({ message: 'User deleted'})

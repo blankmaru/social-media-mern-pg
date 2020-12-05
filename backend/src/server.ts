@@ -156,7 +156,9 @@ passport.use('local', new LocalStrategy( async (username: string, password: stri
                     isAdmin: user.isAdmin,
                     email: user.email,
                     friends: user.friends,
-                    posts: user.posts
+                    posts: user.posts,
+                    avatar: user.avatar,
+                    bgCover: user.bgCover
                 })
             } else {
                 return done(null, false)

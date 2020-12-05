@@ -32,16 +32,23 @@ export default function Profile() {
         <div>
             <div style={{ margin: 'auto', width: '80%' }}>
                 <img 
-                    src="https://wallpapercave.com/wp/wp3306792.jpg"
+                    src={user?.bgCover == null ? "https://i.pinimg.com/originals/11/a4/ee/11a4ee83b1378dc69aa4556723771c21.jpg" : serverURL + '/' + user?.bgCover}
                     width="100%"
                     height="250px"
                     style={{borderRadius: '1rem'}}
                     alt="wallpaper"
                 />
-                <div style={{marginTop: '1rem', display: 'flex',}}>
+                <div style={{marginTop: '1rem', display: 'flex'}}>
                     <Card
                         style={{ width: '33%', borderRadius: '1rem' }}
-                        cover={<img alt="example" src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/06/boruto-tying-headband-Cropped.jpg?q=50&fit=crop&w=960&h=500" />}
+                        cover={
+                            <img 
+                                alt="example" 
+                                width="100%" 
+                                height="100%" 
+                                src={user?.avatar == null ? "https://sun1-88.userapi.com/impf/c840534/v840534050/4abad/BwC2LNFhnOw.jpg?size=400x0&quality=90&crop=287,0,977,1080&sign=145ddeab90d9ae10dce0999dfe8b2aae&c_uniq_tag=CTYnQylPK-A-Rv08UR3_L6sGEqnihGyL3nMulGlZv3E&ava=1" : serverURL + '/' + user?.avatar} 
+                            />
+                        }
                     >
                         <Meta title={user?.username} description={<><MailOutlined /> {user?.email}</>} />
                         {ctx.username === user?.username 
@@ -85,10 +92,9 @@ export default function Profile() {
                     </Card>
 
                     <Card
-                        style={{ width: '33%', marginLeft: '1rem', borderRadius: '1rem' }}
+                        style={{ width: '33%', marginLeft: '1rem' }}
                     >
-                        <Card.Grid hoverable={false} style={{textAlign: 'center', width: '50%'}}><strong>?435</strong> Followers</Card.Grid>
-                        <Card.Grid hoverable={false} style={{textAlign: 'center', width: '50%'}}><strong>{ctx.friends?.length}</strong> Following</Card.Grid>
+                        <Card.Grid hoverable={false} style={{textAlign: 'center', width: '100%'}}><strong>{user?.friends?.length}</strong> Following</Card.Grid>
                         <div style={{marginTop: '5rem', padding: '2rem'}}>
                             <strong>Following:</strong>
                             <List

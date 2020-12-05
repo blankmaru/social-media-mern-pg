@@ -16,6 +16,7 @@ import { myContext } from 'src/Context';
 import { IPost } from 'src/interfaces/interfaces';
 import io from 'socket.io-client'
 import { serverURL } from '../../config'
+import { follow } from 'src/utils/utils';
 
 const socketServer = 'ws://localhost:5000';
 
@@ -29,7 +30,7 @@ export default function PostItem(props: PostProps) {
     const ctx = useContext(myContext)
     const [title, setTitle] = useState<string>('')
     const [content, setContent] = useState<string>('')
-    const [, setImage] = useState<string>('')
+    const [image, setImage] = useState<string>('')
 
     const [visible, setVisible] = useState<boolean>(false)
     const [, setStatus] = useState<boolean>(false)
@@ -62,11 +63,13 @@ export default function PostItem(props: PostProps) {
     };
 
     const update = (id: string) => {
-        Axios.put(serverURL + `/api/posts/${id}`)
+        Axios.put(serverURL + `/api/posts/${id}`, {
+			title,
+			content,
+			image
+		}, { withCredentials: true })
             .then((res: AxiosResponse) => {
-                setTimeout(() => {
-                    window.location.href = "/"
-                }, 1000)
+                window.location.href = "/"
             })
     }
 
@@ -74,9 +77,7 @@ export default function PostItem(props: PostProps) {
         Axios.delete(serverURL + `/api/posts/${id}`)
             .then((res: AxiosResponse) => {
                 setStatus(true)
-                setTimeout(() => {
-                    window.location.href = "/"
-                }, 1000)
+                window.location.href = "/"
             })
     }
 
@@ -91,9 +92,7 @@ export default function PostItem(props: PostProps) {
             withCredentials: true
         }).then((res: AxiosResponse) => {
             console.log(res.data)
-            setTimeout(() => {
-                window.location.href = "/"
-            }, 1000)
+            window.location.href = "/"
         })
     }
 
@@ -198,7 +197,7 @@ export default function PostItem(props: PostProps) {
 					</div>
 				) : ctx ? (
 					<div>
-						<Button>FOLLOW</Button>
+						<Button onClick={() => follow(props.item.author, ctx)}>FOLLOW</Button>
 						<Button onClick={showModal} style={{ marginLeft: '1rem' }}>
 							REPORT <ExclamationCircleOutlined />
 						</Button>

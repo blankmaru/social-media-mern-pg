@@ -106,7 +106,7 @@ const News: React.FC = () => {
                                             }}
                                         >
                                             {/* <CrownOutlined /> */}
-                                            <Link style={{ color: 'black', fontWeight: 600 }} to={`/profile/${item.username}`}>{item.username}</Link>
+                                            <Link style={{ color: 'black', fontWeight: 600 }} to={`/profile/?username=${item.username}`}>{item.username}</Link>
                                         </div>
                                     )
                                 })}

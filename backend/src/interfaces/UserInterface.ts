@@ -6,6 +6,8 @@ export interface IUser {
     id: string;
     friends: Array<object>;
     posts: Array<IPost>;
+    avatar: string;
+    bgCover: string;
 }
 
 export interface IDatabaseUser {
@@ -16,4 +18,6 @@ export interface IDatabaseUser {
     id: string;
     friends: Array<object>;
     posts: Array<IPost>;
+    avatar: string;
+    bgCover: string;
 }

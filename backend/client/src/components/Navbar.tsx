@@ -11,25 +11,14 @@ import {
     PlusCircleOutlined,
     SettingOutlined,
     UsergroupAddOutlined,
-    MessageOutlined,
-    NotificationOutlined
+    MessageOutlined
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { myContext } from '../Context'
-import Axios, { AxiosResponse } from 'axios'
+import { logOut } from 'src/config'
 
 const Navbar: React.FC = () => {
     const ctx = useContext(myContext)
-
-    const logout = () => {
-        Axios.get('http://localhost:5000/api/users/logout', {
-            withCredentials: true
-        }).then((res: AxiosResponse) => {
-            if (res.data.success === true) {
-                window.location.href = "/"
-            }
-        })
-    }
 
     return (
         <Menu
@@ -46,10 +35,7 @@ const Navbar: React.FC = () => {
                     {ctx.isAdmin ? (<Menu.Item>
                             <UserOutlined />
                             <Link to="/admin">Admin</Link>
-                        </Menu.Item>) : (<Menu.Item>
-                            <UserOutlined />
-                            <Link to="/admin">Admin</Link>
-                        </Menu.Item>)}
+                        </Menu.Item>) : null}
                     <Menu.Item>
                         <ProfileOutlined />
                         <Link to={`/profile/?username=${ctx.username}`}>Profile</Link>
@@ -63,14 +49,10 @@ const Navbar: React.FC = () => {
                         <Link to="/friends">Friends</Link>
                     </Menu.Item>
                     <Menu.Item>
-                        <NotificationOutlined />
-                        <Link to="/notifications">Notifications</Link>
-                    </Menu.Item>
-                    <Menu.Item>
                         <SettingOutlined />
                         <Link to="/settings">Settings</Link>
                     </Menu.Item>
-                    <Menu.Item onClick={logout}>
+                    <Menu.Item onClick={logOut}>
                         <LogoutOutlined />
                         <Link to="/logout">Logout</Link>
                     </Menu.Item>
