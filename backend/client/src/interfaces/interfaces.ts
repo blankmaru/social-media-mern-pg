@@ -9,7 +9,8 @@ export interface IUser {
     address: string;
     bio: string;
     avatar: string;
-    bgCover: string;
+    bgcover: string;
+    smaccounts: Array<ISocialAccounts>;
 }
 
 export interface IPost {
@@ -50,4 +51,10 @@ export interface IComment {
 
 export interface IImage {
     image: string;
+}
+
+export interface ISocialAccounts {
+    instagram: string;
+    facebook: string;
+    google: string;
 }

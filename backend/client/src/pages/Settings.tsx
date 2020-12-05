@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Button, Collapse, Divider, Form, Input, Modal } from 'antd';
-import { ArrowRightOutlined, FacebookOutlined, FileImageOutlined, GoogleOutlined, InstagramOutlined, ReloadOutlined, UploadOutlined,  } from '@ant-design/icons';
+import { ArrowRightOutlined, FacebookOutlined, FileImageOutlined, GoogleOutlined, InstagramOutlined, ReloadOutlined, SendOutlined, UploadOutlined,  } from '@ant-design/icons';
 import { logOut, serverURL } from '../config'
 import { myContext } from 'src/Context';
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -16,6 +16,10 @@ function Settings() {
 	
 	const [status, setStatus] = useState<boolean>(false)
 	const [image, setImage] = useState<string>('')
+
+	const [inst, setInst] = useState<string>('')
+	const [facebook, setFacebook] = useState<string>('')
+	const [google, setGoogle] = useState<string>('')
 
     const update = () => {
         Axios.put(serverURL + `/api/users/${ctx.id}`, {
@@ -53,6 +57,16 @@ function Settings() {
         })
 	}
 
+	const changeBg = () => {
+		Axios.post(serverURL + `/api/users/uploadBg/${ctx.id}`, {
+            image: image
+        }, {
+            withCredentials: true
+        }).then((res: AxiosResponse) => {
+			window.location.href = "/"
+        })
+	}
+
 	const onSubmitImg = (acceptedFiles: Array<File>) => {
         console.log(acceptedFiles)
         let formData = new FormData()
@@ -69,7 +83,17 @@ function Settings() {
                     setImage(res.data.url)
                 }
             })
-    }
+	}
+	
+	const sendSocialAccountsInfo = () => {
+		Axios.post(serverURL + `/api/users/accounts/${ctx.id}`, {
+			instagram: inst,
+			facebook,
+			google
+		}, { withCredentials: true }).then((res: AxiosResponse) => {
+			window.location.href = "/"
+		})
+	}
 
 	return (
 		<div style={{ margin: 'auto', width: '50%' }}>
@@ -77,7 +101,7 @@ function Settings() {
 				<ArrowRightOutlined /> Settings
 			</h5>
 			<h5>Account</h5>
-			<Collapse accordion>
+			<Collapse defaultActiveKey={['1']} accordion>
 				<Panel header="Edit profile" key="1">
 					<Form>
 						<Form.Item>
@@ -142,30 +166,73 @@ function Settings() {
 									</Dropzone>
 								</Form.Item>
 								}
-								<p><FileImageOutlined /> {image}</p>
+								{image ? <p><FileImageOutlined /> {image}</p> : null}
 							</Form>
 						</Modal>
 				</div>
 				<div style={{ marginLeft: '1rem' }}>
-					<Button>Change profile cover</Button>
+					<Button onClick={() => showModal()}>Change background</Button>
+					<Modal 
+						title="Upload user background" 
+						visible={status} 
+						onOk={() => changeBg()} 
+						onCancel={handleCancel}
+					>
+							<Form>
+								<Form.Item>
+									<strong>Current image: </strong> {ctx?.bgcover}
+								</Form.Item>
+								{image.length > 0 
+								? null 
+								: <Form.Item>
+									<Dropzone onDrop={(acceptedFiles: Array<File>) => onSubmitImg(acceptedFiles)}>
+										{({ getRootProps, getInputProps }) => (
+											<section style={{ marginTop: '1rem' }}>
+												<div {...getRootProps()}>
+													<input {...getInputProps()} />
+													<Button block type="primary">
+														<UploadOutlined /> Click to upload background image
+													</Button>
+												</div>
+											</section>
+										)}
+									</Dropzone>
+								</Form.Item>
+								}
+								{image ? <p><FileImageOutlined /> {image}</p> : null}
+							</Form>
+						</Modal>
 				</div>
 			</div>
 			<Divider />
 			<h5>Social Accounts</h5>
-			<Collapse accordion>
+			<Collapse defaultActiveKey={['1']} accordion>
 				<Panel header="Social accounts" key="1">
                     <div>
                         <InstagramOutlined /> <strong>Instagram</strong>
-						<Input placeholder="Instagram account url" /> 
+						<Input 
+							value={inst}
+							onChange={(e) => setInst(e.target.value)}
+							placeholder="Instagram account url" 
+						/> 
                     </div>
                     <div>
                         <FacebookOutlined /> <strong>Facebook</strong> 
-						<Input placeholder="Facebook account url" /> 
+						<Input 
+							value={facebook}
+							onChange={(e) => setFacebook(e.target.value)} 
+							placeholder="Facebook account url" 
+						/> 
                     </div>
                     <div>
                         <GoogleOutlined /> <strong>Google</strong> 
-						<Input placeholder="Google account url" /> 
+						<Input 
+							value={google}
+							onChange={(e) => setGoogle(e.target.value)}
+							placeholder="Google account url" 
+						/> 
                     </div>
+					<Button onClick={() => sendSocialAccountsInfo()}><SendOutlined /> SEND</Button>
 				</Panel>
 			</Collapse>
 			<Divider />

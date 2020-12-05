@@ -11,7 +11,9 @@ import {
     deleteUser,
     getUser,
     updateUserInfo,
-    uploadAvatar
+    uploadAvatar,
+    uploadBg,
+    setSocialAccounts
 } from '../controllers/user.controller'
 import { isAdminMiddleware } from '../middleware/admin';
 
@@ -24,9 +26,11 @@ router.get('/logOut', logOut)
 // User routes
 router.get('/:username', getUser)
 router.put('/:id', updateUserInfo)
+router.post('/accounts/:id', setSocialAccounts)
 
 // User Image uploading routes
 router.post('/uploadAvatar/:id', uploadAvatar)
+router.post('/uploadBg/:id', uploadBg)
 
 // Admin routes
 router.get('/', getUsers)

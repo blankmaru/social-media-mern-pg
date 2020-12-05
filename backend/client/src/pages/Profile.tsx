@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { myContext } from '../Context'
 import { Card, Button, List, Avatar  } from 'antd'
-import { EditOutlined, HomeOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import { EditOutlined, FacebookOutlined, GoogleOutlined, HomeOutlined, InstagramOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { IUser } from 'src/interfaces/interfaces';
 import Axios, { AxiosResponse } from 'axios';
@@ -32,7 +32,7 @@ export default function Profile() {
         <div>
             <div style={{ margin: 'auto', width: '80%' }}>
                 <img 
-                    src={user?.bgCover == null ? "https://i.pinimg.com/originals/11/a4/ee/11a4ee83b1378dc69aa4556723771c21.jpg" : serverURL + '/' + user?.bgCover}
+                    src={user?.bgcover === null ? "https://i.pinimg.com/originals/11/a4/ee/11a4ee83b1378dc69aa4556723771c21.jpg" : serverURL + '/' + user?.bgcover}
                     width="100%"
                     height="250px"
                     style={{borderRadius: '1rem'}}
@@ -46,11 +46,22 @@ export default function Profile() {
                                 alt="example" 
                                 width="100%" 
                                 height="100%" 
-                                src={user?.avatar == null ? "https://sun1-88.userapi.com/impf/c840534/v840534050/4abad/BwC2LNFhnOw.jpg?size=400x0&quality=90&crop=287,0,977,1080&sign=145ddeab90d9ae10dce0999dfe8b2aae&c_uniq_tag=CTYnQylPK-A-Rv08UR3_L6sGEqnihGyL3nMulGlZv3E&ava=1" : serverURL + '/' + user?.avatar} 
+                                src={user?.avatar === null ? "https://sun1-88.userapi.com/impf/c840534/v840534050/4abad/BwC2LNFhnOw.jpg?size=400x0&quality=90&crop=287,0,977,1080&sign=145ddeab90d9ae10dce0999dfe8b2aae&c_uniq_tag=CTYnQylPK-A-Rv08UR3_L6sGEqnihGyL3nMulGlZv3E&ava=1" : serverURL + '/' + user?.avatar} 
                             />
                         }
                     >
                         <Meta title={user?.username} description={<><MailOutlined /> {user?.email}</>} />
+                        <div style={{marginTop: '1rem'}}>
+                            <div>
+                                <InstagramOutlined /> <em>{user?.smaccounts == null ? "None" : user?.smaccounts[0].instagram}</em>
+                            </div>
+                            <div>
+                                <FacebookOutlined /> <em>{user?.smaccounts == null ? "None" : user?.smaccounts[1].facebook}</em>
+                            </div>
+                            <div>
+                                <GoogleOutlined /> <em>{user?.smaccounts == null ? "None" : user?.smaccounts[2].google}</em>
+                            </div>
+                        </div>
                         {ctx.username === user?.username 
                         ?   <Button onClick={() => window.location.href = "/settings"} style={{marginTop: '1rem'}}>
                                 <EditOutlined /> EDIT

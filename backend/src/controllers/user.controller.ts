@@ -103,6 +103,35 @@ export const uploadAvatar = async (req: Request, res: Response): Promise<Respons
     }
 }
 
+export const uploadBg = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const id = parseInt(req.params.id)
+        const { image } = req?.body
+
+        const response: QueryResult = await pool.query('UPDATE users SET bgCover = $1 WHERE id = $2', [image, id])
+        logger.info(`User Bg Updated successfully`)
+        return res.status(200).json({ success: true })
+    } catch(err) {
+        logger.error({ error: err })
+        return res.status(400).json({ error: err })
+    }
+}
+
+export const setSocialAccounts = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const id = parseInt(req.params.id)
+        const { instagram, facebook, google } = req?.body
+        const sm: Array<object> = [{"instagram": instagram}, {"facebook": facebook}, {"google": google}]
+
+        const response: QueryResult = await pool.query('UPDATE users SET smAccounts = $1 WHERE id = $2', [sm, id])
+        logger.info(`User accounts upd successfully`)
+        return res.status(200).json({ success: true })
+    } catch(err) {
+        logger.error({ error: err })
+        return res.status(400).json({ error: err })
+    }
+}
+
 // Func for Admin
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {

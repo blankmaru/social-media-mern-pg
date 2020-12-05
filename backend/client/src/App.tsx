@@ -14,17 +14,19 @@ import Friends from './pages/Friends';
 import Settings from './pages/Settings';
 import Messenger from './pages/Messenger';
 import Comments from './pages/Comments';
+import { Footer } from 'antd/lib/layout/layout';
+import { GithubOutlined } from '@ant-design/icons';
 
 function App() {
   const ctx = useContext(myContext)
 
   return (
     <BrowserRouter>
-        <Row>
+        <Row style={{display: 'flex', minHeight: '100vh'}}>
           <Col span={4}>
             <Navbar />
           </Col>
-          <Col span={18} style={{padding: '1rem'}}>
+          <Col span={18} style={{padding: '1rem', flex: 1}}>
           <Switch>
             <Route path='/' exact component={News}></Route>  
             {
@@ -47,6 +49,15 @@ function App() {
         </Switch>
           </Col>
         </Row>
+        <Footer 
+          style={{
+            backgroundColor: '#081830', 
+            display: 'flex',
+            
+          }}>
+          <h6 style={{color: '#e4e9f0'}}>Beta Test - v1.0</h6>
+          <a href="https://github.com/blankmaru" style={{color: '#e4e9f0', marginLeft: '1rem'}}><GithubOutlined /> Author Github</a>
+        </Footer>
     </BrowserRouter>
   );
 }

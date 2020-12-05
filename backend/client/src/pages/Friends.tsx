@@ -49,7 +49,7 @@ function Friends() {
                                     >
                                     <List.Item.Meta
                                         title={
-                                            <a href={`/profile/${item}`}>
+                                            <a href={`/profile/username=${item}`}>
                                                 {item}
                                             </a>
                                         }
@@ -80,7 +80,7 @@ function Friends() {
                                     >
                                     <List.Item.Meta
                                         title={
-                                            <a href={`/profile/${item.username}`}>
+                                            <a href={`/profile/?username=${item.username}`}>
                                                 {item.username}
                                             </a>
                                         }

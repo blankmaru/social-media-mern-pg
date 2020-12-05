@@ -14,7 +14,8 @@ CREATE TABLE users(
     address VARCHAR(64),
     bio VARCHAR(255),
     avatar VARCHAR(255),
-    bgCover VARCHAR(255)
+    bgCover VARCHAR(255),
+    smAccounts json []
 );
 
 CREATE TABLE posts(

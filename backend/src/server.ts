@@ -158,7 +158,8 @@ passport.use('local', new LocalStrategy( async (username: string, password: stri
                     friends: user.friends,
                     posts: user.posts,
                     avatar: user.avatar,
-                    bgCover: user.bgCover
+                    bgCover: user.bgCover,
+                    smAccounts: user.smAccounts
                 })
             } else {
                 return done(null, false)

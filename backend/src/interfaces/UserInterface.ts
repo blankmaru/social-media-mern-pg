@@ -8,6 +8,7 @@ export interface IUser {
     posts: Array<IPost>;
     avatar: string;
     bgCover: string;
+    smAccounts: Array<object>;
 }
 
 export interface IDatabaseUser {
@@ -20,4 +21,5 @@ export interface IDatabaseUser {
     posts: Array<IPost>;
     avatar: string;
     bgCover: string;
+    smAccounts: Array<object>;
 }
